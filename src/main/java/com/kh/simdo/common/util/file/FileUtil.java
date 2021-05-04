@@ -56,7 +56,7 @@ public class FileUtil {
         if(!file.exists()) {
             new File(fileEntity.getFullPath()).mkdirs();
         }
-        System.out.println("경로"+fileEntity.getFullPath() + fileEntity.getRenameFileName());
+
         // 왜 던지냐면 빈으로 등록하지도 않았고, 스프링이 동작하는 서비스나 컨트롤러에서 받아 처리해야 트랜잭션처리 및 예외처리가 가능하다.
         multipartFile.transferTo(file);
     }
