@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 여기가 핵심.
         // 권한
         http.authorizeRequests()
-                .mvcMatchers(HttpMethod.GET, "/index","/member/login", "/member/join", "/member/joinimpl/**","/member/idcheck").permitAll() //이경로들은 권한관리안하고도 쓸 수 있게
+                .mvcMatchers(HttpMethod.GET, "/index","/user/login", "/member/join", "/member/joinimpl/**","/member/idcheck").permitAll() //이경로들은 권한관리안하고도 쓸 수 있게
                 .mvcMatchers(HttpMethod.POST, "/member/mailauth", "/mail", "/member/loginimpl" , "/member/joinimpl", "/member/idcheck").permitAll()
                 //.mvcMatchers(HttpMethod.POST, "/board/upload").hasRole("MEMBER") 기본이 USER인데 다른등급으로 넣을거면 이렇게 지정하면된다. 어드민같이?
                 .anyRequest().authenticated(); //위 경로 외에 모든요청은 막았다
@@ -49,9 +49,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // form login customizing
         http
                 .formLogin()
-                .loginPage("/member/login") // 부트 기본로그인화면말고 우리가 만든 화면으로 지정한다. default : login
-                .loginProcessingUrl("/member/loginimpl")
-                .usernameParameter("userId") // Spring security로 인증할때마다 principal로 사용할 값이 담긴 파라미터가 userId임을 알려준다. default : username. 그래서 셋팅할때 vo를 username으로 하면 편하다
+                .loginPage("/user/login") // 부트 기본로그인화면말고 우리가 만든 화면으로 지정한다. default : login
+                .loginProcessingUrl("/user/loginimpl")
+                .usernameParameter("userEmail") // Spring security로 인증할때마다 principal로 사용할 값이 담긴 파라미터가 userId임을 알려준다. default : username. 그래서 셋팅할때 vo를 username으로 하면 편하다
                 .defaultSuccessUrl("/index",true);
 
         //2. 로그아웃 관련 셋팅
