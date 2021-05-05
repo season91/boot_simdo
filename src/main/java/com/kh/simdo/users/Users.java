@@ -33,6 +33,7 @@ public class Users {
     protected  String role;
 
     @Temporal(TemporalType.DATE)
+    @Column(columnDefinition = "date default sysdate")
     private Date userRegDate;
 
     public String getUserNo() {
