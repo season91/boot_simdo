@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @DynamicInsert
 @DynamicUpdate
+@Table(name = "TB_USER")
 public class Users {
 
     @Id

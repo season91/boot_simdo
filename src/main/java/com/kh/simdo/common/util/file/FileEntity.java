@@ -11,6 +11,7 @@ import java.util.Date;
 @Entity
 @DynamicInsert
 @DynamicUpdate
+@Table(name = "TB_FILE")
 public class FileEntity {
 
     @Id
