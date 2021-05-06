@@ -23,4 +23,9 @@ public class MovieController {
         movieService.saveMovie(movieMap, thumbnail);
         return "index";
     }
+
+    @GetMapping(value = "/movielist")
+    public String movieList(){
+        return "movie/movielist";
+    }
 }

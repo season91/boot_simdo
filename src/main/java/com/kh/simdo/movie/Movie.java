@@ -18,7 +18,11 @@ public class Movie {
 
     @Id
     private String mvNo;
+
+    @Column(columnDefinition = "varchar2(2000char)")
     private String mvTitle;
+
+    @Column(columnDefinition = "varchar2(2000char)")
     private String mvTitleorg;
     private String director;
     private String genre;
@@ -32,9 +36,13 @@ public class Movie {
     private String script;
 
     private String nation;
+
+    @Column(columnDefinition = "varchar2(2000char)")
     private String thumbnail;
     private String runtime;
     private String rating;
+
+    @Column(columnDefinition = "varchar2(2000char)")
     private String poster;
 
     @Column(columnDefinition = "number default 0")

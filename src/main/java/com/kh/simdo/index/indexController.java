@@ -16,4 +16,15 @@ public class indexController {
         return "/index";
     }
 
+    @GetMapping("/about")
+    public void about(){}
+
+    @GetMapping("/blog")
+    public void blog(){}
+
+    @GetMapping("/contact")
+    public void contact(){}
+
+    @GetMapping("/blog-single")
+    public void single(){};
 }
