@@ -4,16 +4,23 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.simdo.common.util.http.HttpUtils;
 import lombok.RequiredArgsConstructor;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -161,6 +168,28 @@ public class MovieService {
         return posterArr[0];
     }
 
+    // 영화 대본정보 크롤링으로 가져온다.
+    public Map<String, String> crwalingMovieScript(String movieName) {
+
+        //movieName = Joker
+        Map<String, String> movieScript = new LinkedHashMap<String, String>();
+
+        try {
+            Document doc = Jsoup.parse(new URL("https://imsdb.com/scripts/"+movieName+".html"), 5000);
+            Elements scriptElement = doc.select("#mainbody > table:nth-child(3) > tbody > tr > td:nth-child(3) > table > tbody > tr");
+
+            for (Element element : scriptElement) {
+
+                movieScript.put("name", movieName);
+                movieScript.put("script", element.children()+"");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return movieScript;
+    }
+
+
     // 영화정보들 movie에 넣어준다.
     public void saveMovie(Map movieMap, String thumbnail) {
         // 감독이랑, 줄거리를 한번더 분리해줘야 한다.
@@ -168,6 +197,7 @@ public class MovieService {
         Map<String, Object> plotMap = listSeparation(movieMap, "plots", "plot");
         // poster 는 배열로 분리해서 첫번째 것만 가져온다.
         String posterLink = posterSplit(movieMap, "posters");
+
 
         Movie movie = new Movie();
         movie.setMvNo((String) movieMap.get("DOCID"));
@@ -182,6 +212,14 @@ public class MovieService {
         movie.setRating((String) movieMap.get("rating"));
         movie.setPoster(posterLink);
         movie.setThumbnail(thumbnail);
+
+        // 영화 제목 기준으로 대본 가져온다
+        Map<String, String> scriptMap = crwalingMovieScript((String) movieMap.get("titleOrg"));
+
+        if(scriptMap.get("script") != null){
+            movie.setScript(scriptMap.get("script"));
+        }
+
         movieRepository.save(movie);
     }
 }

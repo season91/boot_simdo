@@ -20,22 +20,25 @@ public class Movie {
     private String mvNo;
     private String mvTitle;
     private String mvTitleorg;
-    private String mvScore;
     private String director;
     private String genre;
 
     @Temporal(TemporalType.DATE)
     private Date releaseDate;
 
+    @Column(columnDefinition = "clob")
     private String plot;
+    @Column(columnDefinition = "clob")
+    private String script;
+
     private String nation;
     private String thumbnail;
     private String runtime;
     private String rating;
     private String poster;
+
+    @Column(columnDefinition = "number default 0")
     private boolean isDel;
-
-
 
     @Override
     public String toString() {
@@ -43,11 +46,11 @@ public class Movie {
                 "mvNo='" + mvNo + '\'' +
                 ", mvTitle='" + mvTitle + '\'' +
                 ", mvTitleorg='" + mvTitleorg + '\'' +
-                ", mvScore='" + mvScore + '\'' +
                 ", director='" + director + '\'' +
                 ", genre='" + genre + '\'' +
                 ", releaseDate=" + releaseDate +
                 ", plot='" + plot + '\'' +
+                ", script='" + script + '\'' +
                 ", nation='" + nation + '\'' +
                 ", thumbnail='" + thumbnail + '\'' +
                 ", runtime='" + runtime + '\'' +
