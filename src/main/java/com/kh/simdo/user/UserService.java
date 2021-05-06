@@ -2,13 +2,16 @@ package com.kh.simdo.user;
 
 import com.kh.simdo.user.form.JoinForm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -19,6 +22,13 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByUserEmailAndIsLeave(username, false);
+
+        return new UserAccount(user);
+    }
+
     @Transactional
     public void saveUser(JoinForm joinForm) {
         User newUser = new User();
@@ -27,4 +37,5 @@ public class UserService {
         newUser.setUserTel(joinForm.getUserTel());
         userRepository.save(newUser);
     }
+
 }
