@@ -52,6 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/user/login") // 부트 기본로그인화면말고 우리가 만든 화면으로 지정한다. default : login
                 .loginProcessingUrl("/user/loginimpl")
                 .usernameParameter("userEmail") // Spring security로 인증할때마다 principal로 사용할 값이 담긴 파라미터가 userId임을 알려준다. default : username. 그래서 셋팅할때 vo를 username으로 하면 편하다
+                .passwordParameter("userPw")
+                .failureUrl("/user/join")
                 .defaultSuccessUrl("/index",true);
 
         //2. 로그아웃 관련 셋팅

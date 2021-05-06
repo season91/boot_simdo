@@ -1,19 +1,17 @@
-package com.kh.simdo.users;
+package com.kh.simdo.user;
 
-import org.springframework.security.core.userdetails.User;
-
-public class UsersAccount extends User {
+public class UserAccount extends org.springframework.security.core.userdetails.User {
 
     private static final long serialVersionUID = 1L;
 
-    private Users user;
+    private User user;
 
-    public UsersAccount(Users user) {
+    public UserAccount(User user) {
         super(user.getUserEmail(), user.getUserPw(), user.getAuthority());
         this.user = user;
     }
 
-    public Users getUser() {
+    public User getUser() {
         return user;
     }
 

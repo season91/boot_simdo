@@ -1,6 +1,6 @@
-package com.kh.simdo.users;
+package com.kh.simdo.user;
 
-import com.kh.simdo.users.form.JoinForm;
+import com.kh.simdo.user.form.JoinForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -8,18 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.Valid;
-
 @RequestMapping("user")
 @Controller
-public class UsersController {
+public class UserController {
 
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final UsersService usersService;
+    private final UserService userService;
 
-    public UsersController(UsersService usersService) {
-        this.usersService = usersService;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("login")
@@ -28,13 +26,13 @@ public class UsersController {
     }
 
     @GetMapping("join")
-    public String join() {
+    public String join(JoinForm joinForm) {
         return "user/join";
     }
 
     @PostMapping("joinimpl")
-    public String joinImpl(@Valid JoinForm joinForm) {
-        usersService.saveUser(joinForm);
+    public String joinImpl(JoinForm joinForm) {
+        userService.saveUser(joinForm);
         return "/index";
     }
 

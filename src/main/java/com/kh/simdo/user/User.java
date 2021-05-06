@@ -1,7 +1,8 @@
-package com.kh.simdo.users;
+package com.kh.simdo.user;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
@@ -13,13 +14,16 @@ import java.util.List;
 @DynamicInsert
 @DynamicUpdate
 @Table(name = "TB_USER")
-public class Users {
+public class User {
 
     @Id
-    private String userNo;
+    @GeneratedValue
+    private long userNo;
     private String userEmail;
     private String userPw;
     private String userTel;
+
+    @Column(columnDefinition = "varchar2(70 char) default 'USER'")
     private String userNm;
     private String userGender;
 
@@ -37,11 +41,11 @@ public class Users {
     @Column(columnDefinition = "date default sysdate")
     private Date userRegDate;
 
-    public String getUserNo() {
+    public long getUserNo() {
         return userNo;
     }
 
-    public void setUserNo(String userNo) {
+    public void setUserNo(long userNo) {
         this.userNo = userNo;
     }
 

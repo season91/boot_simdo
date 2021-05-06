@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <title>Erase - Free Bootstrap 4 Template by Colorlib</title>
     <meta charset="utf-8">
@@ -76,29 +76,29 @@
         <div class="container" style="margin-top: 10%; margin-bottom: 10%;">
           <div class="row block-9">
             <div class="col-md-12 order-first ftco-animate">
-              <form action="/user/joinimpl" method="post" class="p-4 p-md-5">
+              <form th:action="@{/user/joinimpl}" method="post" th:object="${joinForm}" class="p-4 p-md-5">
 				  <div class="text-center mb-4">회원 가입</div>
                 <div class="form-group">
 					<label>이메일</label>
-                  <input type="text" class="form-control" placeholder="Your Email">
+                  <input type="text" name="userEmail" th:field="*{userEmail}" class="form-control" placeholder="Your Email">
                 </div>
                 <div class="form-group">
 					<label>비밀번호</label>
-                  <input type="text" class="form-control" placeholder="Your Password">
+                  <input type="text" name="userPw" th:field="*{userPw}" class="form-control" placeholder="Your Password">
                 </div>
 				  <div class="form-group">
 					  <label>비밀번호 확인</label>
-					  <input type="text" class="form-control" placeholder="Confirm Your Password">
+					  <input type="text" name="confirmPw" th:field="*{confirmPw}" class="form-control" placeholder="Confirm Your Password">
 				  </div>
 				  <div class="form-group">
 					  <label>전화 번호</label>
 					  <div class="d-flex">
-						  <input type="text" class="form-control mr-2" placeholder="Your Phone">
+						  <input type="text" name="userTel" th:field="*{userTel}" class="form-control mr-2" placeholder="Your Phone">
 						  <input type="button" value="인증번호 발송" class="btn btn-primary py-3 px-5">
 					  </div>
 				  </div>
 				  <div class="form-group d-flex">
-					  <input type="text" class="form-control mr-2" placeholder="인증 번호 입력">
+					  <input type="text" name="certNum" th:field="*{certNum}" class="form-control mr-2" placeholder="인증 번호 입력">
 					  <input type="button" value="확인" class="btn btn-primary py-3 px-5">
 				  </div>
                 <div class="form-group text-center">
