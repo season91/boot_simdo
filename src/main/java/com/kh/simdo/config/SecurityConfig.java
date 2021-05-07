@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 여기가 핵심.
         // 권한
         http.authorizeRequests()
-                .mvcMatchers(HttpMethod.GET, "/fonts/**","/index","/user/login", "/user/join", "/user/joinimpl/**","/user/idcheck","/about","/blog","/blog-single","/contact","/movie/movielist","/movie/db").permitAll() //이경로들은 권한관리안하고도 쓸 수 있게
+                .mvcMatchers(HttpMethod.GET, "/fonts/**","/index","/user/login", "/user/join", "/user/joinimpl/**","/user/idcheck","/about","/blog","/blog-single","/contact","/movie/movielist","/movie/db","/movie/detail").permitAll() //이경로들은 권한관리안하고도 쓸 수 있게
                 .mvcMatchers(HttpMethod.POST, "/user/mailauth", "/mail", "/user/loginimpl" , "/user/joinimpl", "/user/idcheck").permitAll()
                 //.mvcMatchers(HttpMethod.POST, "/board/upload").hasRole("MEMBER") 기본이 USER인데 다른등급으로 넣을거면 이렇게 지정하면된다. 어드민같이?
                 .anyRequest().authenticated(); //위 경로 외에 모든요청은 막았다

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -27,14 +28,21 @@ public class MovieController {
     public String getMovie(String title){
         // 영화 정보를 받은 후에 movie에 저장해준다.
         Map<String, Object> movieMap = movieService.kmdbAPI(title);
-        String thumbnail = movieService.naverMovieAPI(title);
-        movieService.saveMovie(movieMap, thumbnail);
+        movieService.saveMovie(movieMap);
         return "index";
     }
 
+    // 영화 목록
     @GetMapping(value = "/movielist")
     public String movieList(Model model){
         model.addAttribute("movieList", movieService.movieTotalList());
         return "movie/movielist";
+    }
+
+    // 영화 상세
+    @GetMapping(value = "/detail")
+    public String movieDetail(String mvNo, Model model){
+        model.addAttribute("movie",movieService.movieDetail(mvNo));
+        return "movie/detail";
     }
 }

@@ -37,7 +37,7 @@ public class MovieService {
         // 쿼리문 변경해가면서 DB적재
         String url = "";
         switch (title){
-            //1. 아이엠히어
+            //1. 조커
             case "조커" :  url = SERVICE_KEY + "ToddPhillips&actor=호아킨피닉스&detail=Y&collection=kmdb_new2&listCount=1"; break;
             //2. 라라랜드
             case "라라랜드" : url = SERVICE_KEY+ "엠마&actor=라이언고슬링&detail=Y&collection=kmdb_new2&listCount=1"; break;
@@ -64,44 +64,6 @@ public class MovieService {
         }
 
         return resultMap;
-    }
-
-    // 영화 썸네일 가지고 올 네이버영화 API
-    public String naverMovieAPI(String title) {
-        HttpUtils util = new HttpUtils();
-        String clientId = "1TOE19GYAcgawcD0ESm1";
-        String clientSecret = "tmgwvMjtQF";
-        ObjectMapper om = new ObjectMapper();
-        String titleEncoder = null;
-
-        try {
-
-            titleEncoder = URLEncoder.encode(title, "UTF-8");
-
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("검색어 인코딩 실패", e);
-        }
-
-        String apiURL = "https://openapi.naver.com/v1/search/movie.json?query=" + titleEncoder + "&yearfrom=2009&yearto=2019"; // json 결과
-
-        Map<String, String> requestHeaders = new HashMap<>();
-        requestHeaders.put("X-Naver-Client-Id", clientId);
-        requestHeaders.put("X-Naver-Client-Secret", clientSecret);
-
-        String jsonRes = util.get(apiURL, requestHeaders);
-
-        String thumbNail = "";
-        try {
-            Map resMap = om.readValue(jsonRes, Map.class);
-            List<String> itemsList = (List<String>) resMap.get("items");
-            String itemsStr = om.writeValueAsString(itemsList.get(0));
-            Map itemsMap = om.readValue(itemsStr, Map.class);
-            thumbNail = (String) itemsMap.get("image");
-
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return thumbNail;
     }
 
     // 파파고테스트
@@ -189,13 +151,13 @@ public class MovieService {
 
 
     // 영화정보들 movie에 넣어준다.
-    public void saveMovie(Map movieMap, String thumbnail) {
+    public void saveMovie(Map movieMap) {
         // 감독이랑, 줄거리를 한번더 분리해줘야 한다.
         Map<String, Object> directMap = listSeparation(movieMap, "directors", "director");
         Map<String, Object> plotMap = listSeparation(movieMap, "plots", "plot");
-        // poster 는 배열로 분리해서 첫번째 것만 가져온다.
-        String posterLink = posterSplit(movieMap, "posters");
-
+        // poster 는 배열로 분리해서 첫번째 것만 가져오고 화질 변경
+        String thumbnail = posterSplit(movieMap, "posters");
+        String poster = transformPoster(thumbnail);
 
         Movie movie = new Movie();
         movie.setMvNo((String) movieMap.get("DOCID"));
@@ -208,7 +170,7 @@ public class MovieService {
         movie.setNation((String) movieMap.get("nation"));
         movie.setRuntime((String) movieMap.get("runtime"));
         movie.setRating((String) movieMap.get("rating"));
-        movie.setPoster(posterLink);
+        movie.setPoster(poster);
         movie.setThumbnail(thumbnail);
 
         // 영화 제목 기준으로 대본 가져온다
@@ -221,6 +183,15 @@ public class MovieService {
         movieRepository.save(movie);
     }
 
+    //포스터 화질 변경해주기
+    public String transformPoster(String poster){
+        String transPoster = poster.replace("thm/02","poster");
+        transPoster = transPoster.replace(".jpg","_01.jpg");
+        transPoster = transPoster.replace("tn_","");
+        return transPoster;
+    }
+
+    // 날짜 형식 변경해주기
     public Date transformDate(String strDate) {
         // 개봉일자는 String -> util.date -> sql.date 로 변환을 해주어야 한다.
         // util.date로 변환해주기.
@@ -230,13 +201,18 @@ public class MovieService {
         try {
             tempDate = beforFormat.parse(strDate);
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return tempDate;
     }
 
+    // 임시확인용 전체목록
     public List<Movie> movieTotalList(){
-        return movieRepository.findAll();
+        return movieRepository.findMovieByNationContains("미국");
+    }
+
+    // 영화 상세
+    public Movie movieDetail(String mvNo){
+        return movieRepository.findMovieByMvNo(mvNo);
     }
 }
