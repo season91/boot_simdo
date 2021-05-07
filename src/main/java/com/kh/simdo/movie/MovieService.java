@@ -16,13 +16,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor //생성자 생성, 의존성 주입 편의성을 위해 사용. 대신 setter가 없는 메서드 강제로 생성되어, 필드값이 변경될 수 있다.
@@ -42,7 +38,7 @@ public class MovieService {
         String url = "";
         switch (title){
             //1. 아이엠히어
-            case "조커" :  url = SERVICE_KEY + "Todd Phillips&actor=호아킨피닉스&detail=Y&collection=kmdb_new2&listCount=1"; break;
+            case "조커" :  url = SERVICE_KEY + "ToddPhillips&actor=호아킨피닉스&detail=Y&collection=kmdb_new2&listCount=1"; break;
             //2. 라라랜드
             case "라라랜드" : url = SERVICE_KEY+ "엠마&actor=라이언고슬링&detail=Y&collection=kmdb_new2&listCount=1"; break;
             default: break;
@@ -66,7 +62,7 @@ public class MovieService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println(resultMap);
+
         return resultMap;
     }
 
@@ -105,7 +101,6 @@ public class MovieService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println(thumbNail);
         return thumbNail;
     }
 
@@ -142,7 +137,7 @@ public class MovieService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println(res);
+
         return res;
     }
 
@@ -173,7 +168,7 @@ public class MovieService {
 
         //movieName = Joker
         if(movieName.contains(" ")){
-            movieName.replace(" ","-");
+            movieName = movieName.replaceAll(" ","-");
         }
         Map<String, String> movieScript = new LinkedHashMap<String, String>();
 
@@ -208,7 +203,7 @@ public class MovieService {
         movie.setMvTitleorg((String) movieMap.get("titleOrg"));
         movie.setDirector((String) directMap.get("directorNm"));
         movie.setGenre((String) movieMap.get("genre"));
-        movie.setReleaseDate(Date.valueOf((String) movieMap.get("repRlsDate")));
+        movie.setReleaseDate(transformDate((String) movieMap.get("repRlsDate")));
         movie.setPlot((String) plotMap.get("plotText"));
         movie.setNation((String) movieMap.get("nation"));
         movie.setRuntime((String) movieMap.get("runtime"));
@@ -224,5 +219,24 @@ public class MovieService {
         }
 
         movieRepository.save(movie);
+    }
+
+    public Date transformDate(String strDate) {
+        // 개봉일자는 String -> util.date -> sql.date 로 변환을 해주어야 한다.
+        // util.date로 변환해주기.
+        SimpleDateFormat beforFormat = new SimpleDateFormat("yyyymmdd");
+        SimpleDateFormat afterFormat = new SimpleDateFormat("yyyy-mm-dd");
+        Date tempDate = null;
+        try {
+            tempDate = beforFormat.parse(strDate);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return tempDate;
+    }
+
+    public List<Movie> movieTotalList(){
+        return movieRepository.findAll();
     }
 }
