@@ -33,7 +33,7 @@ public class UserController {
     @PostMapping("joinimpl")
     public String joinImpl(JoinForm joinForm) {
         userService.saveUser(joinForm);
-        return "/index";
+        return "user/login";
     }
 
 }

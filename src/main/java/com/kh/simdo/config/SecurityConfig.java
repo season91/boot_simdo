@@ -61,7 +61,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .logout()
                 .logoutUrl("/user/logout") //로그아웃경로. Http method:post
-                .logoutSuccessUrl("/"); //성공후 이동경로
+                .logoutSuccessUrl("/user/login"); //성공후 이동경로
 
         //3. csrf 열어주기. (메일관련 링크는 열어줘야한다).
         http.csrf().ignoringAntMatchers("/mail");
