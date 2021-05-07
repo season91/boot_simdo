@@ -18,6 +18,7 @@ public class MovieController {
     @GetMapping(value = "/db")
     public String getMovie(String title){
         // 영화 정보를 받은 후에 movie에 저장해준다.
+        System.out.println("test");
         Map<String, Object> movieMap = movieService.kmdbAPI(title);
         String thumbnail = movieService.naverMovieAPI(title);
         movieService.saveMovie(movieMap, thumbnail);

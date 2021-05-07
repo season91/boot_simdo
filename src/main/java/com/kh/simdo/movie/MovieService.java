@@ -36,13 +36,13 @@ public class MovieService {
     public Map<String, Object> kmdbAPI(String title) {
         HttpUtils util = new HttpUtils();
         ObjectMapper om = new ObjectMapper();
-        String SERVICE_KEY = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?ServiceKey=RLYJPR31F2X100MT6HX3&query=";
+        String SERVICE_KEY = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?ServiceKey=GE40RB7377JK9WJ72713&query=";
 
-        // 쿼리문 변경해가면서 h2에 데이터 넣자!
+        // 쿼리문 변경해가면서 DB적재
         String url = "";
         switch (title){
             //1. 아이엠히어
-            case "아이엠히어" :  url = SERVICE_KEY + "알랭샤바&actor=배두나&detail=Y&collection=kmdb_new2&listCount=1"; break;
+            case "조커" :  url = SERVICE_KEY + "Todd Phillips&actor=호아킨피닉스&detail=Y&collection=kmdb_new2&listCount=1"; break;
             //2. 라라랜드
             case "라라랜드" : url = SERVICE_KEY+ "엠마&actor=라이언고슬링&detail=Y&collection=kmdb_new2&listCount=1"; break;
             default: break;
@@ -172,6 +172,9 @@ public class MovieService {
     public Map<String, String> crwalingMovieScript(String movieName) {
 
         //movieName = Joker
+        if(movieName.contains(" ")){
+            movieName.replace(" ","-");
+        }
         Map<String, String> movieScript = new LinkedHashMap<String, String>();
 
         try {
