@@ -17,7 +17,9 @@ public class indexController {
     }
 
     @GetMapping("/about")
-    public void about(){}
+    public String about() {
+        return "/about";
+    }
 
     @GetMapping("/blog")
     public void blog(){}
