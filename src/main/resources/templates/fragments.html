@@ -52,6 +52,7 @@
                                     <li><a th:href="@{/user/login}"><span>Login</span></a></li>
                                 </th:block>
                                 <th:block sec:authorize="isAuthenticated()">
+                                    <li><a th:href="@{/mypage/mycalendar}"><span>MyPage</span></a></li>
                                     <li style="cursor: pointer"><a th:onclick="logout.submit()"><span>Logout</span></a></li>
                                     <form th:action="@{/user/logout}" method="post" id="logout"></form>
                                 </th:block>
