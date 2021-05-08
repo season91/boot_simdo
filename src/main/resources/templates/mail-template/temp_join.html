@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:insert="fragments :: flg_head"></th:block>
+</head>
+<body>
+	<img src="https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289_960_720.jpg"/>
+	<h1 class="text">반갑습니다. [[${userEmail}]] 님.</h1>
+	<h2 class="text">아래의 링크를 클릭해 회원가입을 완료해주세요.</h2>
+	<span style="display: none;">[[${T(com.kh.simdo.common.code.ConfigCode).DOMAIN.desc}]]/user/joinimpl/[[${authPath}]]</span>
+	<a th:href="|${T(com.kh.simdo.common.code.ConfigCode).DOMAIN.desc}/user/joinimpl/${authPath}|">회원가입완료</a><br>
+</body>
+</html>

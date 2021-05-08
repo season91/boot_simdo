@@ -7,5 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUserEmailAndIsLeave(String userEmail, boolean isLeave);
+    boolean existsByUserEmail(String userEmail);
 
 }

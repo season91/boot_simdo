@@ -153,5 +153,15 @@
             </div>
         </footer>
     </th:block>
+
+    <script type="text/javascript" th:inline="javascript" th:fragment="ajax-csrf-header">
+        let getCsrfHeader = () => {
+            let headerObj = new Headers();
+            let csrfHeader = "[(${_csrf.headerName})]";
+            let csrfToken = "[(${_csrf.token})]";
+            headerObj.append(csrfHeader, csrfToken);
+            return headerObj;
+        }
+    </script>
 </body>
 </html>

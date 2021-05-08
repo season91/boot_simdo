@@ -4,7 +4,8 @@ public enum ErrorCode {
 
     FILE01("파일 업로드 중 에러가 발생하였습니다."),
     CODE_500("서버에서 에러가 발생하였습니다."),
-    NONE_EXIST_ARTICLE("찾으시는 게시물이 존재하지 않습니다");
+    NONE_EXIST_ARTICLE("찾으시는 게시물이 존재하지 않습니다"),
+    EXPIRED_LINK("이미 인증이 만료된 링크입니다.");
 
     private String errMsg;
 
