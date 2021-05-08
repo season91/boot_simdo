@@ -26,7 +26,7 @@ public class Review {
     @ManyToOne //영화 하나에 후기는 여러개
     private Movie movie;
 
-    private int reviewScore;
+    private String reviewScore;
 
     @Column(columnDefinition = "date default sysdate")
     private Date reviewRegDate;
@@ -62,11 +62,11 @@ public class Review {
         this.movie = movie;
     }
 
-    public int getReviewScore() {
+    public String getReviewScore() {
         return reviewScore;
     }
 
-    public void setReviewScore(int reviewScore) {
+    public void setReviewScore(String reviewScore) {
         this.reviewScore = reviewScore;
     }
 

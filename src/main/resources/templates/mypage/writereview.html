@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<th:block th:insert="fragments :: flg_head"/>
 </head>
@@ -32,27 +32,28 @@
 	    <section class="ftco-section ftco-no-pb ftco-no-pt">
 	    	<div class="container-fluid px-0">
 	    		<div class="row no-gutters">
-	    			<div class="col-md-12 blog-wrap bg-darken">
-	    				<div class="row no-gutters align-items-center">
-	    					<div class="col-md-6 d-flex justify-content-center align-items-center order-md-last js-fullheight">
-	    						<div class="img" style="background-image: url(/images/image_4.jpg);"></div>
-	    					</div>
-	    					<div class="col-md-6">
-	    						<div class="text p-md-5 p-4 ftco-animate">
-	    							<div class="icon d-flex align-items-center mb-5">
-	    								<div class="img" style="background-image: url(/images/person_2.jpg);"></div>
-	    								<div class="position pl-3">
-	    									<h4 class="mb-0">Jamie Jonson</h4>
-	    									<span>fashion.com</span>
-	    								</div>
-	    							</div>
-	    							<h2 class="mb-4"><a href="blog-single.html">Make Peace With Your Broken Pieces</a></h2>
-	    							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove.</p>
-	    							<p class="mb-0 mt-4"><a href="#" class="btn btn-primary">Read more <span class="ion-ios-arrow-forward"></span></a></p>
-	    						</div>
-	    					</div>
-	    				</div>
-	    			</div>
+					<div class="col-md-12 blog-wrap">
+						<div class="row no-gutters align-items-center">
+							<div class="col-md-6 js-fullheight" th:attr="style=|background-image: url(${movie.poster}); background-repeat: no-repeat !important; background-position: center center !important;|">
+
+							</div>
+							<div class="col-md-6">
+								<div class="text p-md-5 p-4 ftco-animate">
+									<div class="icon d-flex align-items-center mb-5">
+										<div class="position pl-3">
+											<h4 class="mb-0" th:text="${movie.mvTitle}"></h4>
+											<span th:text="${movie.director}"></span>
+										</div>
+									</div>
+									<h2 class="mb-4">Movie Review</h2>
+									<label class="mr-4">감상 일자</label><input type="date" name="watchDate" required><br>
+									<label class="mr-4 mb-4">평점</label><input type="number" name="reviewScore" max="5" min="0" step="0.1">
+									<textarea rows="5" name="reviewContent" style="resize: none; width: 90%;" required></textarea>
+									<p class="mb-0 mt-4"><a href="#" class="btn btn-primary">Register</a></p>
+								</div>
+							</div>
+						</div>
+					</div>
 	    		</div>
 	    	</div>
 	    </section>
@@ -82,6 +83,6 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="/js/google-map.js"></script>
     <script src="/js/main.js"></script>
-    
+
   </body>
 </html>
