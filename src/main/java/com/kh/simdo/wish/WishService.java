@@ -19,4 +19,6 @@ public class WishService {
         wish.setUserNo(userNo);
         return wishRepository.save(wish);
     }
+
+    //찜해제하기
 }
