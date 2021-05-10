@@ -1,7 +1,8 @@
-package com.kh.simdo.mypage.review.form;
+package com.kh.simdo.mypage.review;
 
-import com.kh.simdo.mypage.review.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ReviewRepository extends JpaRepository<Review, String> {
 }

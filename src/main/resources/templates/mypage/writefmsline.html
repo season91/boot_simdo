@@ -23,7 +23,7 @@
 					  <span class="mr-2"><a th:href="@{/mypage/myqna}">My Q&A</a></span><!--나의 문의 및 요청-->
 					  <span><a th:href="@{/mypage/myinfo}">My Info</a></span><!--회원정보변경-->
 				  </p>
-	            <h1 class="bread">Write Review</h1>
+	            <h1 class="bread">Write Famous Line</h1>
 	          </div>
 	        </div>
 	      </div>
@@ -45,17 +45,11 @@
 											<span th:text="${movie.director}"></span>
 										</div>
 									</div>
-									<h2 class="mb-4">Movie Review</h2>
-									<form th:action="@{/mypage/reviewupload}" method="post">
+									<h2 class="mb-4">Famous Line</h2>
+									<form th:action="@{/mypage/fmslineupload}" method="post">
 										<input type="hidden" name="mvNo" th:value="${movie.mvNo}">
 										<div class="form-group">
-											<label class="mr-4">감상 일자</label><input type="date" name="watchDate" required>
-										</div>
-										<div class="form-group  mb-4">
-											<label class="mr-4">평점</label><span class="ion-ios-star mr-2"></span><input type="number" name="reviewScore" max="5" min="0" step="0.1" required>
-										</div>
-										<div class="form-group">
-											<textarea rows="5" name="reviewContent" style="resize: none; width: 90%;" required></textarea>
+											<textarea rows="5" name="fmlContent" style="resize: none; width: 90%;" required></textarea>
 										</div>
 										<p class="mb-0 mt-4"><input type="submit" value="Register" class="btn btn-primary"></p>
 									</form>

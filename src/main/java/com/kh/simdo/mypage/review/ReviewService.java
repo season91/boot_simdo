@@ -1,6 +1,5 @@
 package com.kh.simdo.mypage.review;
 
-import com.kh.simdo.mypage.review.form.ReviewRepository;
 import org.springframework.stereotype.Service;
 
 @Service
