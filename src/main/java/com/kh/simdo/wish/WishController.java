@@ -13,7 +13,7 @@ public class WishController {
 
     private final WishService wishService;
 
-    //찜 하기, 비동기 통신
+    //찜 하기, 비동기 통신!!
     @GetMapping("/add")
     @ResponseBody
     public String addWish(String mvNo){
