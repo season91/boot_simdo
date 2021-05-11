@@ -21,4 +21,11 @@ public class ReviewService {
     public List<Review> findByUserAndIsReviewDelOrderByReviewRegDateDesc(User user) {
         return reviewRepository.findByUserAndIsReviewDelOrderByReviewRegDateDesc(user, false);
     }
+
+    public void deleteReview(String reviewNo) {
+        Review review = reviewRepository.findByReviewNo(reviewNo);
+        review.setReviewDel(true);
+
+        reviewRepository.save(review);
+    }
 }
