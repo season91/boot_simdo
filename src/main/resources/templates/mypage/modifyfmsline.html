@@ -23,7 +23,7 @@
 					  <span class="mr-2"><a th:href="@{/mypage/myqna}">My Q&A</a></span><!--나의 문의 및 요청-->
 					  <span><a th:href="@{/mypage/myinfo}">My Info</a></span><!--회원정보변경-->
 				  </p>
-	            <h1 class="bread">Write Review</h1>
+	            <h1 class="bread">Write Famous Line</h1>
 	          </div>
 	        </div>
 	      </div>
@@ -34,28 +34,22 @@
 	    		<div class="row no-gutters">
 					<div class="col-md-12 blog-wrap">
 						<div class="row no-gutters align-items-center">
-							<div class="col-md-6 js-fullheight" th:attr="style=|background-image: url(${review.movie.poster}); background-repeat: no-repeat !important; background-position: center center !important;|">
+							<div class="col-md-6 js-fullheight" th:attr="style=|background-image: url(${fmsline.movie.poster}); background-repeat: no-repeat !important; background-position: center center !important;|">
 
 							</div>
 							<div class="col-md-6">
 								<div class="text p-md-5 p-4 ftco-animate">
 									<div class="icon d-flex align-items-center mb-5">
 										<div class="position">
-											<h4 class="mb-0" th:text="${review.movie.mvTitle}"></h4>
-											<span th:text="${review.movie.director}"></span>
+											<h4 class="mb-0" th:text="${fmsline.movie.mvTitle}"></h4>
+											<span th:text="${fmsline.movie.director}"></span>
 										</div>
 									</div>
-									<h2 class="mb-4">Movie Review</h2>
-									<form th:action="@{/mypage/updatereview}" method="post">
-										<input type="hidden" name="reviewNo" th:value="${review.reviewNo}">
+									<h2 class="mb-4">Famous Line</h2>
+									<form th:action="@{/mypage/updatefmsline}" method="post">
+										<input type="hidden" name="fmslineNo" th:value="${fmsline.fmslineNo}">
 										<div class="form-group">
-											<label class="mr-4">감상 일자</label><input type="date" name="watchDate" th:value="${watchDate}" required>
-										</div>
-										<div class="form-group  mb-4">
-											<label class="mr-4">평점</label><span class="ion-ios-star mr-2"></span><input type="number" name="reviewScore" max="5" min="0" step="0.1" th:value="${review.reviewScore}" required>
-										</div>
-										<div class="form-group">
-											<textarea rows="5" name="reviewContent" th:text="${review.reviewContent}" style="resize: none; width: 90%;" required></textarea>
+											<textarea rows="5" name="fmlContent" th:text="${fmsline.fmlContent}" style="resize: none; width: 90%;" required></textarea>
 										</div>
 										<p class="mb-0 mt-4"><input type="submit" value="Modify" class="btn btn-primary"></p>
 									</form>

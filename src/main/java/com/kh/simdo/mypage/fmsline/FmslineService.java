@@ -22,6 +22,10 @@ public class FmslineService {
         return fmslineRepository.findByUserAndIsFmlDelOrderByFmlRegDateDesc(user, false);
     }
 
+    public Fmsline findByFmslineNo(String fmslineNo) {
+        return fmslineRepository.findByFmslineNo(fmslineNo);
+    }
+
     public void deleteFmsline(String fmslineNo) {
         Fmsline fmsline = fmslineRepository.findByFmslineNo(fmslineNo);
         fmsline.setFmlDel(true);
