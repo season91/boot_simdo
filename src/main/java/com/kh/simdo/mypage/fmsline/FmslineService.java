@@ -18,7 +18,7 @@ public class FmslineService {
         fmslineRepository.save(fmsline);
     }
 
-    public List<Fmsline> findByUserOrderByFmlRegDateDesc(User user) {
-        return fmslineRepository.findByUserOrderByFmlRegDateDesc(user);
+    public List<Fmsline> findByUserAndIsFmlDelOrderByFmlRegDateDesc(User user) {
+        return fmslineRepository.findByUserAndIsFmlDelOrderByFmlRegDateDesc(user, false);
     }
 }

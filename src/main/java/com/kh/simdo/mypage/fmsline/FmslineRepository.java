@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface FmslineRepository extends JpaRepository<Fmsline, String> {
 
-    List<Fmsline> findByUserOrderByFmlRegDateDesc(User user);
+    List<Fmsline> findByUserAndIsFmlDelOrderByFmlRegDateDesc(User user, boolean IsFmlDel);
 
 }

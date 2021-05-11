@@ -18,7 +18,7 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
-    public List<Review> findByUserOrderByReviewRegDateDesc(User user) {
-        return reviewRepository.findByUserOrderByReviewRegDateDesc(user);
+    public List<Review> findByUserAndIsReviewDelOrderByReviewRegDateDesc(User user) {
+        return reviewRepository.findByUserAndIsReviewDelOrderByReviewRegDateDesc(user, false);
     }
 }
