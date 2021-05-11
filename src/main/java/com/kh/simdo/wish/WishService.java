@@ -21,4 +21,5 @@ public class WishService {
     }
 
     //찜해제하기
+
 }

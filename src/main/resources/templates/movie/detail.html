@@ -28,13 +28,14 @@
 				<div class="row no-gutters d-flex">
 					<div class="col-md-12 col-lg-6 d-flex align-items-stretch">
 						<div class="img-about img d-flex align-items-stretch">
-							<img class="img d-flex align-self-stretch align-items-center" th:src="${movie.poster}"/>
+							<img class="img d-flex align-self-stretch align-items-center poster" th:src="${movie.poster}"/>
 						</div>
 					</div>
 					<div class="col-md-12 col-lg-6 pl-lg-5 py-5 d-flex align-items-center">
 						<div class="p-0 px-lg-5 p-lg-0">
 							<div class="row justify-content-start pb-3">
 								<div class="col-md-12 heading-section ftco-animate">
+									<input type="hidden" class="mvno" th:value="${movie.mvNo}">
 									<span class="subheading" th:text="${movie.director}"></span><br>
 									<span class="subheading" th:text="${movie.runtime}"></span><br>
 									<span class="subheading" th:text="${movie.releaseDate}"></span><br>
@@ -46,7 +47,7 @@
 							<div class="row">
 								<div class="col-md-6">
 									<div class="media block-6 services d-block ftco-animate">
-										<div class="icon"><span class="icon icon-heart"></span></div>
+										<div class="icon"><span class="icon icon-heart wish"></span></div>
 										<div class="media-body">
 											<h3 class="heading mb-3">찜하기</h3>
 										</div>
@@ -118,6 +119,6 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="/js/google-map.js"></script>
     <script src="/js/main.js"></script>
-    
+    <script src="/js/movie.js"></script>
   </body>
 </html>

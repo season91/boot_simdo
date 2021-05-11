@@ -1,5 +1,6 @@
 package com.kh.simdo.wish;
 
+import com.kh.simdo.user.User;
 import com.kh.simdo.user.UserAccount;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,12 +19,13 @@ public class WishController {
     //찜 하기, 비동기 통신!!
     @GetMapping("/add")
     @ResponseBody
-    public String addWish(String mvNo, long userNo /*@AuthenticationPrincipal UserAccount userAccount*/){
-        Wish wish = wishService.insertWish(mvNo, userNo /*userAccount.getUser().getUserNo()*/);
-        System.out.println("test??wish"+wish);
+    public String addWish(String mvNo, @AuthenticationPrincipal UserAccount userAccount){
+        Wish wish = wishService.insertWish(mvNo, userAccount.getUser().getUserNo());
         if(wish == null){
             return "fail";
         }
         return "success";
     }
+
+    //찜 해제하기.
 }
