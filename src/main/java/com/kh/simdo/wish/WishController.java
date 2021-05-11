@@ -1,6 +1,8 @@
 package com.kh.simdo.wish;
 
+import com.kh.simdo.user.UserAccount;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +18,11 @@ public class WishController {
     //찜 하기, 비동기 통신!!
     @GetMapping("/add")
     @ResponseBody
-    public String addWish(String mvNo){
-
+    public String addWish(String mvNo, @AuthenticationPrincipal UserAccount userAccount){
+        Wish wish = wishService.insertWish(mvNo, userAccount.getUser().getUserNo());
+        if(wish == null){
+            return "fail";
+        }
         return "success";
     }
 }
