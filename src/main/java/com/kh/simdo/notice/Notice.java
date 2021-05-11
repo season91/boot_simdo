@@ -18,7 +18,7 @@ public class Notice {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @GeneratedValue(generator = "uuid")
     private String nNo;
-    
+
     private String nTitle;
     private String nContent;
 
