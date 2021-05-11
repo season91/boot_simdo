@@ -20,7 +20,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @Service
-public class UserService implements UserDetailsService {
+public class
+UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 

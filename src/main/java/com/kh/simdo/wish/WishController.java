@@ -18,8 +18,9 @@ public class WishController {
     //찜 하기, 비동기 통신!!
     @GetMapping("/add")
     @ResponseBody
-    public String addWish(String mvNo, @AuthenticationPrincipal UserAccount userAccount){
-        Wish wish = wishService.insertWish(mvNo, userAccount.getUser().getUserNo());
+    public String addWish(String mvNo, long userNo /*@AuthenticationPrincipal UserAccount userAccount*/){
+        Wish wish = wishService.insertWish(mvNo, userNo /*userAccount.getUser().getUserNo()*/);
+        System.out.println("test??wish"+wish);
         if(wish == null){
             return "fail";
         }

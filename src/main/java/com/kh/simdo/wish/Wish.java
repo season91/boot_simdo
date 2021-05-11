@@ -26,6 +26,9 @@ public class Wish {
     private String mvNo;
     private long userNo;
 
+    @Column(columnDefinition = "number default 0")
+    private boolean isWishDel;
+
     @Override
     public String toString() {
         return "Wish{" +
