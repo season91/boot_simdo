@@ -54,8 +54,8 @@
 									<h2 class="mb-4"><a th:text="${review.movie.mvTitle}"></a></h2>
 									<p th:text="${review.reviewContent}"></p>
 									<p class="mb-0 mt-4">
-										<a href="#" class="btn btn-primary">수정하기 <span class="ion-ios-arrow-forward"></span></a>
-										<a href="#" class="btn btn-primary">삭제하기 <span class="ion-ios-arrow-forward"></span></a>
+										<a th:href="@{/mypage/modifyreview(reviewNo=${review.reviewNo})}" class="mr-2 btn btn-primary">수정하기 <span class="ion-ios-arrow-forward"></span></a>
+										<button th:attr="onclick=|deleteReview('${review.reviewNo}')|" class="btn btn-dark">삭제하기 <span class="ion-ios-arrow-forward"></span></button>
 									</p>
 								</div>
 							</div>
@@ -85,8 +85,8 @@
 									<h2 class="mb-4"><a th:text="${fmsline.movie.mvTitle}"></a></h2>
 									<p th:text="${fmsline.fmlContent}"></p>
 									<p class="mb-0 mt-4">
-										<a href="#" class="btn btn-primary">수정하기 <span class="ion-ios-arrow-forward"></span></a>
-										<a href="#" class="btn btn-primary">삭제하기 <span class="ion-ios-arrow-forward"></span></a>
+										<a th:href="@{/mypage/modifyfml(fmslineNo=${fmsline.fmslineNo})}" class="mr-2 btn btn-primary">수정하기 <span class="ion-ios-arrow-forward"></span></a>
+										<button th:attr="onclick=|deleteFmsline('${fmsline.fmslineNo}')|" class="btn btn-dark">삭제하기 <span class="ion-ios-arrow-forward"></span></button>
 									</p>
 								</div>
 							</div>
@@ -121,6 +121,50 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="/js/google-map.js"></script>
     <script src="/js/main.js"></script>
+
+  	<script type="text/javascript" th:inline="javascript">
+		function deleteReview(reviewNum) {
+			let reviewNo = reviewNum;
+			if (confirm("작성한 후기를 삭제하시겠습니까?")) {
+				fetch("/mypage/delreview?reviewNo=" + reviewNo, {
+					method:"GET"
+				})
+				.then(response => response.text())
+				.then(text => {
+					if(text == 'success'){
+						alert("삭제되었습니다.")
+						location.href = location.href;
+					}else{
+						alert("삭제 도중 에러가 발생했습니다.");
+						location.href = location.href;
+					}
+				})
+			}else{
+				alert("취소되었습니다.");
+			}
+		}
+
+		function deleteFmsline(fmslineNum) {
+			let fmslineNo = fmslineNum;
+			if (confirm("작성한 명대사를 삭제하시겠습니까?")) {
+				fetch("/mypage/delfmsline?fmslineNo=" + fmslineNo, {
+					method:"GET"
+				})
+				.then(response => response.text())
+				.then(text => {
+					if(text == 'success'){
+						alert("삭제되었습니다.")
+						location.href = location.href;
+					}else{
+						alert("삭제 도중 에러가 발생했습니다.");
+						location.href = location.href;
+					}
+				})
+			}else{
+				alert("취소되었습니다.");
+			}
+		}
+	</script>
     
   </body>
 </html>

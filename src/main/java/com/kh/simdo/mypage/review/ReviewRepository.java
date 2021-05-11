@@ -10,5 +10,6 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<Review, String> {
 
     List<Review> findByUserAndIsReviewDelOrderByReviewRegDateDesc(User user, boolean isReviewDel);
+    Review findByReviewNo(String reviewNo);
 
 }

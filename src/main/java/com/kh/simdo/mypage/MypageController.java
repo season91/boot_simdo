@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
 
@@ -88,6 +89,22 @@ public class MypageController {
         model.addAttribute("fmsline", fmslineService.findByUserAndIsFmlDelOrderByFmlRegDateDesc(userAccount.getUser()));
 
         return "mypage/myreview";
+    }
+
+    @GetMapping("delreview")
+    @ResponseBody
+    public String delReview(String reviewNo) {
+        reviewService.deleteReview(reviewNo);
+
+        return "success";
+    }
+
+    @GetMapping("delfmsline")
+    @ResponseBody
+    public String delFmsline(String fmslineNo) {
+        fmslineService.deleteFmsline(fmslineNo);
+
+        return "success";
     }
 
 }
