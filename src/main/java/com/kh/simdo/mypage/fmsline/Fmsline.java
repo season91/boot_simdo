@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @DynamicInsert
@@ -26,6 +27,18 @@ public class Fmsline {
     private Movie movie;
 
     private String fmlContent;
+
+    @Column(columnDefinition = "date default sysdate")
+    private Date fmlRegDate;
+
+    @Column(columnDefinition = "number default 0")
+    private int fmlLike;
+
+    @Column(columnDefinition = "number default 0")
+    private int fmlHate;
+
+    @Column(columnDefinition = "number default 0")
+    private boolean isFmlDel;
 
     public String getFmslineNo() {
         return fmslineNo;
@@ -59,14 +72,36 @@ public class Fmsline {
         this.fmlContent = fmlContent;
     }
 
-    @Override
-    public String toString() {
-        return "Fmsline{" +
-                "fmslineNo='" + fmslineNo + '\'' +
-                ", user=" + user +
-                ", movie=" + movie +
-                ", fmlContent='" + fmlContent + '\'' +
-                '}';
+    public Date getFmlRegDate() {
+        return fmlRegDate;
     }
-    
+
+    public void setFmlRegDate(Date fmlRegDate) {
+        this.fmlRegDate = fmlRegDate;
+    }
+
+    public int getFmlLike() {
+        return fmlLike;
+    }
+
+    public void setFmlLike(int fmlLike) {
+        this.fmlLike = fmlLike;
+    }
+
+    public int getFmlHate() {
+        return fmlHate;
+    }
+
+    public void setFmlHate(int fmlHate) {
+        this.fmlHate = fmlHate;
+    }
+
+    public boolean isFmlDel() {
+        return isFmlDel;
+    }
+
+    public void setFmlDel(boolean fmlDel) {
+        isFmlDel = fmlDel;
+    }
+
 }

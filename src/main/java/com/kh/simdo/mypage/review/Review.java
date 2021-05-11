@@ -36,7 +36,13 @@ public class Review {
     private Date watchDate;
 
     @Column(columnDefinition = "number default 0")
-    private boolean isDel;
+    private int reviewLike;
+
+    @Column(columnDefinition = "number default 0")
+    private int reviewHate;
+
+    @Column(columnDefinition = "number default 0")
+    private boolean isReviewDel;
 
     public String getReviewNo() {
         return reviewNo;
@@ -94,12 +100,28 @@ public class Review {
         this.watchDate = watchDate;
     }
 
-    public boolean isDel() {
-        return isDel;
+    public int getReviewLike() {
+        return reviewLike;
     }
 
-    public void setDel(boolean del) {
-        isDel = del;
+    public void setReviewLike(int reviewLike) {
+        this.reviewLike = reviewLike;
+    }
+
+    public int getReviewHate() {
+        return reviewHate;
+    }
+
+    public void setReviewHate(int reviewHate) {
+        this.reviewHate = reviewHate;
+    }
+
+    public boolean isReviewDel() {
+        return isReviewDel;
+    }
+
+    public void setReviewDel(boolean reviewDel) {
+        isReviewDel = reviewDel;
     }
 
 }

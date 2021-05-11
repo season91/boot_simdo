@@ -1,6 +1,9 @@
 package com.kh.simdo.mypage.fmsline;
 
+import com.kh.simdo.user.User;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class FmslineService {
@@ -15,4 +18,7 @@ public class FmslineService {
         fmslineRepository.save(fmsline);
     }
 
+    public List<Fmsline> findByUserOrderByFmlRegDateDesc(User user) {
+        return fmslineRepository.findByUserOrderByFmlRegDateDesc(user);
+    }
 }

@@ -1,6 +1,9 @@
 package com.kh.simdo.mypage.review;
 
+import com.kh.simdo.user.User;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ReviewService {
@@ -15,4 +18,7 @@ public class ReviewService {
         reviewRepository.save(review);
     }
 
+    public List<Review> findByUserOrderByReviewRegDateDesc(User user) {
+        return reviewRepository.findByUserOrderByReviewRegDateDesc(user);
+    }
 }

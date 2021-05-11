@@ -83,7 +83,10 @@ public class MypageController {
     }
 
     @GetMapping("myreview")
-    public String myReview() {
+    public String myReview(Model model, @AuthenticationPrincipal UserAccount userAccount) {
+        model.addAttribute("review", reviewService.findByUserOrderByReviewRegDateDesc(userAccount.getUser()));
+        model.addAttribute("fmsline", fmslineService.findByUserOrderByFmlRegDateDesc(userAccount.getUser()));
+
         return "mypage/myreview";
     }
 
