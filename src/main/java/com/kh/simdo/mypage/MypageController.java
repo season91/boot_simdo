@@ -4,9 +4,11 @@ import com.kh.simdo.movie.MovieService;
 import com.kh.simdo.mypage.fmsline.Fmsline;
 import com.kh.simdo.mypage.fmsline.FmslineService;
 import com.kh.simdo.mypage.fmsline.form.FmslineForm;
+import com.kh.simdo.mypage.fmsline.form.UpdateFmslineForm;
 import com.kh.simdo.mypage.review.Review;
 import com.kh.simdo.mypage.review.ReviewService;
 import com.kh.simdo.mypage.review.form.ReviewForm;
+import com.kh.simdo.mypage.review.form.UpdateReviewForm;
 import com.kh.simdo.user.UserAccount;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 
 @RequestMapping("mypage")
 @Controller
@@ -105,6 +109,51 @@ public class MypageController {
         fmslineService.deleteFmsline(fmslineNo);
 
         return "success";
+    }
+
+    @GetMapping("modifyreview")
+    public String modifyReview(String reviewNo, Model model) {
+        Review review = reviewService.findByReviewNo(reviewNo);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String watchDate = simpleDateFormat.format(review.getWatchDate());
+        model.addAttribute("review", review);
+        model.addAttribute("watchDate", watchDate);
+
+        return "mypage/modifyreview";
+    }
+
+    @PostMapping("updatereview")
+    public String updateReview(UpdateReviewForm updateReviewForm, Model model) {
+        Review review = reviewService.findByReviewNo(updateReviewForm.getReviewNo());
+        review.setReviewScore(updateReviewForm.getReviewScore());
+        review.setReviewContent(updateReviewForm.getReviewContent());
+        review.setWatchDate(Date.valueOf(updateReviewForm.getWatchDate()));
+        reviewService.saveReview(review);
+
+        model.addAttribute("alertMsg", "영화 후기가 수정되었습니다.");
+        model.addAttribute("url", "/mypage/myreview");
+
+        return "common/result";
+    }
+
+    @GetMapping("modifyfml")
+    public String modifyFmsline(String fmslineNo, Model model) {
+        Fmsline fmsline = fmslineService.findByFmslineNo(fmslineNo);
+        model.addAttribute("fmsline", fmsline);
+
+        return "mypage/modifyfmsline";
+    }
+
+    @PostMapping("updatefmsline")
+    public String updateFmsline(UpdateFmslineForm updateFmslineForm, Model model) {
+        Fmsline fmsline = fmslineService.findByFmslineNo(updateFmslineForm.getFmslineNo());
+        fmsline.setFmlContent(updateFmslineForm.getFmlContent());
+        fmslineService.saveFmsline(fmsline);
+
+        model.addAttribute("alertMsg", "영화 명대사가 수정되었습니다.");
+        model.addAttribute("url", "/mypage/myreview");
+
+        return "common/result";
     }
 
 }

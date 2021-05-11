@@ -3,6 +3,7 @@ package com.kh.simdo.mypage.review;
 import com.kh.simdo.user.User;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -14,6 +15,7 @@ public class ReviewService {
         this.reviewRepository = reviewRepository;
     }
 
+    @Transactional
     public void saveReview(Review review) {
         reviewRepository.save(review);
     }
@@ -22,6 +24,11 @@ public class ReviewService {
         return reviewRepository.findByUserAndIsReviewDelOrderByReviewRegDateDesc(user, false);
     }
 
+    public Review findByReviewNo(String reviewNo) {
+        return reviewRepository.findByReviewNo(reviewNo);
+    }
+
+    @Transactional
     public void deleteReview(String reviewNo) {
         Review review = reviewRepository.findByReviewNo(reviewNo);
         review.setReviewDel(true);
