@@ -83,7 +83,19 @@
 										</div>
 									</div>
 									<h2 class="mb-4"><a th:text="${fmsline.movie.mvTitle}"></a></h2>
-									<p th:text="${fmsline.fmlContent}"></p>
+									<p th:text="${fmsline.fmlContent}" class="fmsline"></p>
+									<select name="lan" size=1 class="choose-lan  " id="lang">
+										<option value="en">영어</option>
+										<option value="ja">일본어</option>
+										<option value="fr">프랑스어</option>
+										<option value="zh-CN">중국어 간체</option>
+										<option value="zh-TW">중국어 번체</option>
+										<option value="ru">러시아어</option>
+										<option value="de">독일어</option>
+										<option value="es">스페인어</option>
+									</select>
+									<input th:type="hidden" th:value="${fmsline.fmlContent}" id="fmsline">
+									<button  class="btn btn-dark translation">번역하기</button>
 									<p class="mb-0 mt-4">
 										<a th:href="@{/mypage/modifyfml(fmslineNo=${fmsline.fmslineNo})}" class="mr-2 btn btn-primary">수정하기 <span class="ion-ios-arrow-forward"></span></a>
 										<button th:attr="onclick=|deleteFmsline('${fmsline.fmslineNo}')|" class="btn btn-dark">삭제하기 <span class="ion-ios-arrow-forward"></span></button>
@@ -121,7 +133,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="/js/google-map.js"></script>
     <script src="/js/main.js"></script>
-
+  	<script src="/js/papago.js"></script>
   	<script type="text/javascript" th:inline="javascript">
 		function deleteReview(reviewNum) {
 			let reviewNo = reviewNum;

@@ -66,42 +66,6 @@ public class MovieService {
         return resultMap;
     }
 
-    // 파파고테스트
-    public String papagoAPI(String paramText){
-        ObjectMapper om = new ObjectMapper();
-        HttpUtils util = new HttpUtils();
-        String clientId = "1TOE19GYAcgawcD0ESm1";
-        String clientSecret = "tmgwvMjtQF";
-
-        String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
-        String text;
-        String body;
-        String lan = "en";
-        try {
-            text = URLEncoder.encode(paramText, "UTF-8");
-            body = "source=ko&target="+lan+"&text=" + text;
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException("번역 인코딩 실패", e);
-        }
-
-        Map<String, String> requestHeaders = new HashMap<>();
-        requestHeaders.put("X-Naver-Client-Id", clientId);
-        requestHeaders.put("X-Naver-Client-Secret", clientSecret);
-
-        String json = util.post(apiURL, body, requestHeaders);
-        String res = "";
-        try {
-            Map<String, Object> mapRes = om.readValue(json, Map.class);
-            Map<String, Object> mapRes1 = (Map<String, Object>) mapRes.get("message");
-            Map<String, Object> mapRes2 = (Map<String, Object>) mapRes1.get("result");
-            res = (String) mapRes2.get("translatedText");
-
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        return res;
-    }
 
     // json 한번더 파싱해야 하는 경우 사용할 메서드
     public Map<String, Object> listSeparation(Map<String, Object> map, String beforecategory, String aftercategory) {
@@ -215,4 +179,42 @@ public class MovieService {
     public Movie movieDetail(String mvNo){
         return movieRepository.findMovieByMvNo(mvNo);
     }
+
+
+    // 아영 파파고
+    public String papagoAPI(String paramText, String lan){
+        ObjectMapper om = new ObjectMapper();
+        HttpUtils util = new HttpUtils();
+        String clientId = "1TOE19GYAcgawcD0ESm1";
+        String clientSecret = "tmgwvMjtQF";
+
+        String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
+        String text;
+        String body;
+        try {
+            text = URLEncoder.encode(paramText, "UTF-8");
+            body = "source=ko&target="+lan+"&text=" + text;
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException("번역 인코딩 실패", e);
+        }
+
+        Map<String, String> requestHeaders = new HashMap<>();
+        requestHeaders.put("X-Naver-Client-Id", clientId);
+        requestHeaders.put("X-Naver-Client-Secret", clientSecret);
+
+        String json = util.post(apiURL, body, requestHeaders);
+        String res = "";
+        try {
+            Map<String, Object> mapRes = om.readValue(json, Map.class);
+            Map<String, Object> mapRes1 = (Map<String, Object>) mapRes.get("message");
+            Map<String, Object> mapRes2 = (Map<String, Object>) mapRes1.get("result");
+            res = (String) mapRes2.get("translatedText");
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return res;
+    }
+
 }

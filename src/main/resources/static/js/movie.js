@@ -40,7 +40,6 @@
 
 
     document.querySelector('.wish').addEventListener('click',()=>{
-        console.dir("색?"+wishcolor);
         if(wishcolor == ''){
             wishAdd();
             wishchange('red');

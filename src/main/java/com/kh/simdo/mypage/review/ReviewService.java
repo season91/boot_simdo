@@ -41,4 +41,9 @@ public class ReviewService {
     public Review findByUserAndMovieAndIsReviewDel(User user, Movie movie){
         return reviewRepository.findByUserAndMovieAndIsReviewDel(user, movie, false);
     }
+
+    //아영: 영화상세에 후기내역 표시를 위한
+    public List<Review> findByIsReviewDelOrderByReviewRegDateDesc(boolean isReviewDel){
+        return reviewRepository.findByIsReviewDelOrderByReviewRegDateDesc(isReviewDel);
+    }
 }

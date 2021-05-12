@@ -41,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .mvcMatchers(HttpMethod.GET, "/fonts/**","/index","/user/login", "/user/join", "/user/joinimpl/**","/user/emailcheck",
                         "/user/telauth", "/user/telconfirm", "/about","/blog","/blog-single","/contact","/movie/movielist","/movie/db","/movie/detail","/wish/**").permitAll() //이경로들은 권한관리안하고도 쓸 수 있게
-                .mvcMatchers(HttpMethod.POST, "/user/mailauth", "/mail", "/user/loginimpl" , "/user/joinimpl", "/user/idcheck").permitAll()
+                .mvcMatchers(HttpMethod.POST, "/user/mailauth", "/mail", "/user/loginimpl" , "/user/joinimpl", "/user/idcheck","/movie/**").permitAll()
                 //.mvcMatchers(HttpMethod.POST, "/board/upload").hasRole("MEMBER") 기본이 USER인데 다른등급으로 넣을거면 이렇게 지정하면된다. 어드민같이?
                 .anyRequest().authenticated(); //위 경로 외에 모든요청은 막았다
 
@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/user/login"); //성공후 이동경로
 
         //3. csrf 열어주기. (메일관련 링크는 열어줘야한다).
-        http.csrf().ignoringAntMatchers("/mail");
+        http.csrf().ignoringAntMatchers("/mail","/movie/translation");
 
         //4. rememberme 로그인유지기능
        /* http.rememberMe()

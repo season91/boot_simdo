@@ -10,6 +10,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -23,5 +26,16 @@ public class MovieControllerTest {
         mockMvc.perform(get("/movie/db")
             .param("title","라라랜드")
             ).andDo(print());
+    }
+
+    @Test
+    public void papagoAPITest() throws Exception{
+        Map<String, String> data = new HashMap<>();
+        data.put("text","조커");
+        data.put("lan","en");
+        mockMvc.perform(post("/movie/translation")
+                .param("text", "조커")
+                .param("lan","en")
+        ).andDo(print());
     }
 }

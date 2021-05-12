@@ -56,8 +56,8 @@
 								</div>
 								<div class="col-md-6">
 									<div class="media block-6 services d-block ftco-animate">
-										<div th:if="${review == null}" class="icon"><span class="icon icon-book"></span></div>
-										<div th:unless="${review == null}" class="icon"><span class="icon icon-book" style="color: lightpink"></span></div>
+										<div th:if="${isReview == null}" class="icon"><span class="icon icon-book"></span></div>
+										<div th:unless="${isReview == null}" class="icon"><span class="icon icon-book" style="color: lightpink"></span></div>
 										<div class="media-body">
 											<h3 class="heading mb-3">후기작성</h3>
 										</div>
@@ -66,19 +66,37 @@
 							</div>
 
 							<div class="row">
-								<div class="col-md-6">
+								<div class="col-md-12">
 									<div class="media block-6 services d-block ftco-animate">
 										<div class="media-body">
 											<h3 class="heading mb-3">심도 후기</h3>
-											<p>dddd</p>
+											<a th:if="${review == null}" th:href="@{/mypage/writereview(mvNo=${movie.mvNo})}">후기작성하러가기</a>
+											<p th:unless="${review == null}" th:each="review : ${review}">
+												<a class="col-md-6 review" th:text="${review.reviewContent}"></a>
+											</p>
 										</div>
 									</div>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-12">
 									<div class="media block-6 services d-block ftco-animate">
 										<div class="media-body">
-											<h3 class="heading mb-3">심도 명대사</h3>
-											<p>d?D?D?D</p>
+											<h3 class="heading mb-3" >심도 명대사</h3>
+											<a th:if="${fms == null}" th:href="@{/mypage/writefmsline(mvNo=${movie.mvNo})}">명대사작성하러가기</a>
+											<div th:unless="${fms == null}" th:each="fmsline : ${fms}">
+												<p class="col-md-6 fmsline" th:text="${fmsline.fmlContent}"></p>
+												<select name="lan" size=1 class="choose-lan col-md-3 " id="lang">
+													<option value="en">영어</option>
+													<option value="ja">일본어</option>
+													<option value="fr">프랑스어</option>
+													<option value="zh-CN">중국어 간체</option>
+													<option value="zh-TW">중국어 번체</option>
+													<option value="ru">러시아어</option>
+													<option value="de">독일어</option>
+													<option value="es">스페인어</option>
+												</select>
+												<input th:type="hidden" th:value="${fmsline.fmlContent}" id="fmsline">
+												<button  class="btn btn-dark col-md-3 translation">번역하기</button>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -122,5 +140,7 @@
     <script src="/js/google-map.js"></script>
     <script src="/js/main.js"></script>
     <script src="/js/movie.js"></script>
+	<script src="/js/papago.js"></script>
+
   </body>
 </html>

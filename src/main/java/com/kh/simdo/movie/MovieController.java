@@ -1,5 +1,7 @@
 package com.kh.simdo.movie;
 
+import com.google.gson.Gson;
+import com.kh.simdo.mypage.fmsline.FmslineService;
 import com.kh.simdo.mypage.review.ReviewService;
 import com.kh.simdo.user.UserAccount;
 import com.kh.simdo.wish.WishService;
@@ -7,8 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ public class MovieController {
     private final MovieService movieService;
     private final ReviewService reviewService;
     private final WishService wishService;
+    private final FmslineService fmslineService;
 
     // DB확정전까지 영화 2개 불러오는 용도
     @GetMapping(value = "/tempmovie")
@@ -51,14 +53,38 @@ public class MovieController {
         // 1. 영화정보 전송
         model.addAttribute("movie",movieService.movieDetail(mvNo));
 
-        // 2. 후기여부 전송
+        // 2-1. 후기여부 전송
         Movie movie = new Movie();
         movie.setMvNo(mvNo);
-        model.addAttribute("review", reviewService.findByUserAndMovieAndIsReviewDel(userAccount.getUser(), movie));
+        model.addAttribute("isReview", reviewService.findByUserAndMovieAndIsReviewDel(userAccount.getUser(), movie));
+        
+        // 2-2. 후기내역 전송
+        model.addAttribute("review",reviewService.findByIsReviewDelOrderByReviewRegDateDesc(false));
 
         // 3. 찜여부 전송
         model.addAttribute("wish", wishService.findByUserNoAndMvNoAndIsWishDel(userAccount.getUser().getUserNo(), mvNo, false));
 
+        // 4. 명대사내역 전송
+        model.addAttribute("fms",fmslineService.findByMovieAndIsFmlDel(movie, false));
+
         return "movie/detail";
+    }
+
+    // 명대사 번역, 비동기통신
+    @PostMapping("translation")
+    @ResponseBody
+    public String fmsTranslation(@RequestParam String data){
+
+        Gson gson = new Gson();
+        Map<String, String> parsedData = gson.fromJson(data, Map.class);
+
+        String text = (String) parsedData.get("text");
+        String lan = (String) parsedData.get("lan");
+
+        String res = movieService.papagoAPI(text, lan);
+        if(res == null){
+            return "fail";
+        }
+        return res;
     }
 }
