@@ -16,16 +16,35 @@ public class WishController {
 
     private final WishService wishService;
 
-    //찜 하기, 비동기 통신!!
+    //찜 하기, 비동기 통신
     @GetMapping("/add")
     @ResponseBody
     public String addWish(String mvNo, @AuthenticationPrincipal UserAccount userAccount){
-        Wish wish = wishService.insertWish(mvNo, userAccount.getUser().getUserNo());
+        Wish wish = new Wish();
+        wish.setMvNo(mvNo);
+        wish.setUserNo(userAccount.getUser().getUserNo());
+
+        wishService.saveWish(wish);
+
         if(wish == null){
             return "fail";
         }
         return "success";
     }
 
-    //찜 해제하기.
+    //찜 해제하기. isDel 1 처리.
+    @GetMapping("/del")
+    @ResponseBody
+    public String delWish(String mvNo, @AuthenticationPrincipal UserAccount userAccount){
+        Wish wish = new Wish();
+        wish.setMvNo(mvNo);
+        wish.setUserNo(userAccount.getUser().getUserNo());
+
+        wishService.saveWish(wish);
+
+        if(wish == null){
+            return "fail";
+        }
+        return "success";
+    }
 }

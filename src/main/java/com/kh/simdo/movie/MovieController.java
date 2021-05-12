@@ -1,6 +1,10 @@
 package com.kh.simdo.movie;
 
+import com.kh.simdo.mypage.review.ReviewService;
+import com.kh.simdo.user.UserAccount;
+import com.kh.simdo.wish.WishService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +20,8 @@ public class MovieController {
 
 
     private final MovieService movieService;
+    private final ReviewService reviewService;
+    private final WishService wishService;
 
     // DB확정전까지 영화 2개 불러오는 용도
     @GetMapping(value = "/tempmovie")
@@ -41,8 +47,18 @@ public class MovieController {
 
     // 영화 상세
     @GetMapping(value = "/detail")
-    public String movieDetail(String mvNo, Model model){
+    public String movieDetail(String mvNo, @AuthenticationPrincipal UserAccount userAccount, Model model){
+        // 1. 영화정보 전송
         model.addAttribute("movie",movieService.movieDetail(mvNo));
+
+        // 2. 후기여부 전송
+        Movie movie = new Movie();
+        movie.setMvNo(mvNo);
+        model.addAttribute("review", reviewService.findByUserAndMovieAndIsReviewDel(userAccount.getUser(), movie));
+
+        // 3. 찜여부 전송
+        model.addAttribute("wish", wishService.findByUserNoAndMvNoAndIsWishDel(userAccount.getUser().getUserNo(), mvNo, false));
+
         return "movie/detail";
     }
 }

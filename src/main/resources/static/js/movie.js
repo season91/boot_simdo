@@ -41,13 +41,13 @@
 
     document.querySelector('.wish').addEventListener('click',()=>{
         console.dir("색?"+wishcolor);
-        if(wishcolor == 'black'){
+        if(wishcolor == ''){
             wishAdd();
             wishchange('red');
 
         } else {
             wishDel();
-            wishchange('black');
+            wishchange('');
 
         }
     })

@@ -1,5 +1,6 @@
 package com.kh.simdo.mypage.review;
 
+import com.kh.simdo.movie.Movie;
 import com.kh.simdo.user.User;
 import org.springframework.stereotype.Service;
 
@@ -34,5 +35,10 @@ public class ReviewService {
         review.setReviewDel(true);
 
         reviewRepository.save(review);
+    }
+
+    //아영 : 영화상세에 후기작성 여부 표시
+    public Review findByUserAndMovieAndIsReviewDel(User user, Movie movie){
+        return reviewRepository.findByUserAndMovieAndIsReviewDel(user, movie, false);
     }
 }
