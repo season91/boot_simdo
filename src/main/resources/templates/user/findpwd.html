@@ -31,7 +31,6 @@
 				  <h2 class="text text-center mb-4">Find Password</h2>
                 <div class="form-group">
                   <input type="text" name="userEmail" id="userEmail" class="form-control" placeholder="Your Email">
-                    <small class="text-danger" id="email_check"></small>
                     <small class="text-danger" th:if="${#fields.hasErrors('userEmail')}" th:errors="*{userEmail}"></small>
                 </div>
                 <div class="form-group">
@@ -72,6 +71,19 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="/js/google-map.js"></script>
     <script src="/js/main.js"></script>
+
+  <script>
+      document.querySelector('#frm_findpwd').addEventListener('submit', (e)=>{
+          let userTel = document.querySelector('#userTel').value;
+          let telRegExp = /^\d{11}$/;
+
+          if (!(telRegExp.test(userTel))){
+              e.preventDefault();
+              tel_check.innerHTML = '전화번호는 \'-\'를 제외한 11자리 숫자를 입력해주세요.';
+              document.querySelector('#userTel').value='';
+          }
+      });
+  </script>
     
   </body>
 </html>
