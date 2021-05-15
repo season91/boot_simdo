@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:insert="fragments :: flg_head"></th:block>
+</head>
+<body>
+	<img src="https://cdn.pixabay.com/photo/2019/04/24/21/55/cinema-4153289_960_720.jpg"/>
+	<h1 class="text">안녕하세요. [[${userEmail}]] 님.</h1>
+	<h2 class="text">임시 비밀번호로 로그인 후 반드시 비밀번호를 변경해주세요.</h2>
+	<h2 class="text">임시 비밀번호는 [[${tmpPwd}]] 입니다.</h2>
+</body>
+</html>

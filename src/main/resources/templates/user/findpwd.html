@@ -17,7 +17,7 @@
 	        <div class="row no-gutters text align-items-end js-fullheight justify-content-center" data-scrollax-parent="true">
 	          <div class="col-md-12 ftco-animate text-center">
 	            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Contact</span></p>
-	            <h1 class="bread">Login</h1>
+	            <h1 class="bread">Find Password</h1>
 	          </div>
 	        </div>
 	      </div>
@@ -27,24 +27,21 @@
         <div class="container" style="margin-top: 10%; margin-bottom: 10%;">
           <div class="row block-9">
             <div class="col-md-12 order-first ftco-animate">
-              <form th:action="@{/user/loginimpl}" method="post" class="p-4 p-md-5">
-				  <h2 class="text text-center mb-4">Login</h2>
+              <form id="frm_findpwd" th:action="@{/user/findpwdimpl}" method="post" th:object="${findPwdForm}" class="p-4 p-md-5">
+				  <h2 class="text text-center mb-4">Find Password</h2>
                 <div class="form-group">
-                  <input type="text" name="userEmail" class="form-control" placeholder="Your Email">
+                  <input type="text" name="userEmail" id="userEmail" class="form-control" placeholder="Your Email">
+                    <small class="text-danger" id="email_check"></small>
+                    <small class="text-danger" th:if="${#fields.hasErrors('userEmail')}" th:errors="*{userEmail}"></small>
                 </div>
                 <div class="form-group">
-                  <input type="text" name="userPw" class="form-control" placeholder="Your Password">
+                  <input type="text" name="userTel" id="userTel" class="form-control" placeholder="Your Phone">
+                    <small class="text-danger" id="tel_check"></small>
+                    <small class="text-danger" th:if="${#fields.hasErrors('userTel')}" th:errors="*{userTel}"></small>
                 </div>
-				  <small class="text-danger" th:if="${param.error}">아이디나 비밀번호를 확인하세요.</small>
                 <div class="form-group text-center">
-                  <input type="submit" value="Login" class="btn btn-primary py-3 px-5">
+                  <input type="submit" value="임시 비밀번호 받기" class="btn btn-primary py-3 px-5">
                 </div>
-				  <div class="text-center">
-				  	<small class="text-center">아직 SIMDO:wm의 회원이 아니세요? <a th:href="@{/user/join}">회원 가입</a>하셔서 많은 혜택을 누려보세요!</small>
-				  </div>
-                  <div class="text-center">
-                      <small class="text-center">혹시 비밀번호를 잊으셨나요? <a th:href="@{/user/findpwd}">비밀번호를 찾아보세요!</a></small>
-				  </div>
               </form>
             </div>
           </div>

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.time.ZoneId;
 
 @RequestMapping("mypage")
 @Controller
