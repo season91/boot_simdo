@@ -1,6 +1,5 @@
 package com.kh.simdo.wish;
 
-import com.kh.simdo.user.User;
 import com.kh.simdo.user.UserAccount;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

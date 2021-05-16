@@ -9,4 +9,10 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class QnAService {
+
+    private final QnARepository qnARepository;
+
+    public QnA insertQnA(QnA qna){
+        return qnARepository.save(qna);
+    }
 }

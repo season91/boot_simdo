@@ -19,6 +19,7 @@ import java.util.Date;
 public class QnA {
 
     @Id
+    @GeneratedValue
     private long qnaNo;
 
     @ManyToOne
@@ -29,8 +30,10 @@ public class QnA {
     private String qnaContent;
 
     @Temporal(TemporalType.DATE)
+    @Column(columnDefinition = "date default sysdate")
     private Date qnaRegDate;
 
+    @Column(columnDefinition = "number default 0")
     private boolean isFile;
 
     @Override
