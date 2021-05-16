@@ -17,7 +17,7 @@
 	        <div class="row no-gutters text align-items-end js-fullheight justify-content-center" data-scrollax-parent="true">
 	          <div class="col-md-12 ftco-animate text-center">
 	            <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Blog</span></p>
-	            <h1 class="bread">Movie List</h1>
+	            <h1 class="bread">Q&A List</h1>
 	          </div>
 	        </div>
 	      </div>
@@ -26,25 +26,50 @@
 	    <section class="ftco-section ftco-no-pb ftco-no-pt">
 	    	<div class="container-fluid px-0">
 	    		<div class="row no-gutters">
-					<div th:each="movie : ${movieList}" class="col-md-12 blog-wrap bg-darken">
+					<div  class="col-md-12 blog-wrap bg-darken">
 						<div class="row no-gutters align-items-center">
-							<div class="col-md-6 d-flex justify-content-center align-items-center order-md-last js-fullheight">
-								<img th:src="${movie.poster}" class="img" alt="...">
-							</div>
-							<div class="col-md-6">
+							<div th:if="${qnaList.size() == 0}" class="col-md-12">
 								<div class="text p-md-5 p-4 ftco-animate">
-									<div class="icon d-flex align-items-center mb-5">
-
-										<div class="position pl-3">
-											<h4 class="mb-0" th:text="${movie.director}">Jamie Jonson</h4>
-											<span th:text="${movie.nation}"></span>
-										</div>
-									</div>
-									<h2 class="mb-4"><a href="blog-single.html" th:text="${movie.mvTitleorg}"></a></h2>
-									<p th:text="${movie.plot}"></p>
-									<p class="mb-0 mt-4"><a th:href="@{/movie/detail(mvNo=${movie.mvNo})}" class="btn btn-primary">Read more <span class="ion-ios-arrow-forward"></span></a></p>
+									<h2 class="mb-4 text-center" style="color: white">문의내역이 없습니다.</h2>
+								</div>
+								<div class="d-flex justify-content-center">
+									<p class="mb-0 mt-4"><a th:href="@{/qna/write}" class="btn btn-primary">문의 작성 하기</a></p>
 								</div>
 							</div>
+
+							<div th:if="${qnaList.size() > 0}" class="col-md-12">
+								<table class="table table-dark table-hover">
+									<thead>
+									<tr>
+										<th scope="col">문의번호</th>
+										<th scope="col">문의제목</th>
+										<th scope="col">문의작성일</th>
+										<th scope="col">답변여부</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr th:each="qna : ${qnaList}">
+										<td th:text="${qna.qnaNo}"></td>
+										<td th:text="${qna.qnaTitle}"></td>
+										<td th:text="${qna.qnaRegDate}"></td>
+										<td th:if="${qna.qnaComent != null}" th:text="답변완료"></td>
+										<td th:unless="${qna.qnaComent != null}" th:text="미답변"></td>
+									</tr>
+									</tbody>
+								</table>
+
+								<div aria-label="Page navigation" class="d-flex justify-content-center">
+									<ul class="pagination">
+										<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+										<li class="page-item"><a class="page-link" href="#">1</a></li>
+										<li class="page-item"><a class="page-link" href="#">2</a></li>
+										<li class="page-item"><a class="page-link" href="#">3</a></li>
+										<li class="page-item"><a class="page-link" href="#">Next</a></li>
+									</ul>
+								</div>
+
+							</div>
+
 						</div>
 					</div>
 				</div>

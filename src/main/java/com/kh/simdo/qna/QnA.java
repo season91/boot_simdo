@@ -28,6 +28,7 @@ public class QnA {
     private String qnaType;
     private String qnaTitle;
     private String qnaContent;
+    private String qnaComent;
 
     @Temporal(TemporalType.DATE)
     @Column(columnDefinition = "date default sysdate")
@@ -35,6 +36,10 @@ public class QnA {
 
     @Column(columnDefinition = "number default 0")
     private boolean isFile;
+
+    @Column(columnDefinition = "number default 0")
+    private boolean isDel;
+
 
     @Override
     public String toString() {
@@ -44,8 +49,10 @@ public class QnA {
                 ", qnaType='" + qnaType + '\'' +
                 ", qnaTitle='" + qnaTitle + '\'' +
                 ", qnaContent='" + qnaContent + '\'' +
+                ", qnaComent='" + qnaComent + '\'' +
                 ", qnaRegDate=" + qnaRegDate +
                 ", isFile=" + isFile +
+                ", isDel=" + isDel +
                 '}';
     }
 }

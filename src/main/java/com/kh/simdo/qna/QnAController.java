@@ -17,8 +17,8 @@ public class QnAController {
 
     // q&a 목록
     @GetMapping("")
-    public String qnaList(@AuthenticationPrincipal UserAccount userAccount){
-
+    public String qnaList(@AuthenticationPrincipal UserAccount userAccount, Model model){
+        model.addAttribute("qnaList",qnAService.findQnAByUserAndIsDel(userAccount.getUser(), false));
         return "qna/qnalist";
     }
 
