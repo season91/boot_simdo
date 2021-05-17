@@ -61,6 +61,7 @@ public class Paging {
     private void calPrevAndNext() {
         prev = currentPage == 1?currentPage:currentPage-1;
         next = currentPage == lastPage?lastPage:currentPage+1;
+
     }
 
     // 2. PagingBuilder를 밖에서 부를수 있게 해줄 클래스 구현

@@ -1,11 +1,16 @@
 package com.kh.simdo.qna;
 
+import com.kh.simdo.common.util.paging.Paging;
 import com.kh.simdo.user.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -18,8 +23,26 @@ public class QnAService {
         return qnARepository.save(qna);
     }
 
-    public List<QnA> findQnAByUserAndIsDel(User user, boolean isDel){
-        return qnARepository.findQnAByUserAndIsDel(user, isDel);
+    public Map<String, Object> findQnAByUserAndIsDel(User user, boolean isDel, PageRequest page){
+        Page<QnA> qnas = qnARepository.findQnAByUserAndIsDel(user, isDel, page);
+        Paging paging = Paging.builder()
+                .currentPage(page.getPageNumber()+1)
+                .blockCnt(5)
+                .cntPerPage(page.getPageSize())
+                .type("qna")
+                .total((int)qnARepository.count())
+                .build();
+        System.out.println("페이징 이전페이지"+paging.getPrev());
+        Map<String, Object> commandMap = new HashMap<>();
+        commandMap.put("paging", paging);
+        commandMap.put("qnaList", qnas.getContent());
+
+        return commandMap;
+    }
+
+
+    public QnA findQnAByQnaNoAndIsDel(long QnaNo, boolean isDel){
+        return qnARepository.findQnAByQnaNoAndIsDel(QnaNo, isDel);
     }
 
 }

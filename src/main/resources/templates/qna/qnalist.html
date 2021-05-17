@@ -27,7 +27,6 @@
 	    	<div class="container-fluid px-0">
 	    		<div class="row no-gutters">
 					<div  class="col-md-12 blog-wrap bg-darken">
-						<div class="row no-gutters align-items-center">
 							<div th:if="${qnaList.size() == 0}" class="col-md-12">
 								<div class="text p-md-5 p-4 ftco-animate">
 									<h2 class="mb-4 text-center" style="color: white">문의내역이 없습니다.</h2>
@@ -37,7 +36,7 @@
 								</div>
 							</div>
 
-							<div th:if="${qnaList.size() > 0}" class="col-md-12">
+							<div th:if="${qnaList.size() > 0}" class="d-flex flex-column justify-content-center align-items-center">
 								<table class="table table-dark table-hover">
 									<thead>
 									<tr>
@@ -52,25 +51,22 @@
 										<td th:text="${qna.qnaNo}"></td>
 										<td th:text="${qna.qnaTitle}"></td>
 										<td th:text="${qna.qnaRegDate}"></td>
-										<td th:if="${qna.qnaComent != null}" th:text="답변완료"></td>
-										<td th:unless="${qna.qnaComent != null}" th:text="미답변"></td>
+										<td th:if="${qna.qnaComent != null}" ><a th:href="@{/qna/detail(qnaNo=${qna.qnaNo})}">답변완료</a></td>
+										<td th:unless="${qna.qnaComent != null}"><a th:href="@{/qna/detail(qnaNo=${qna.qnaNo})}">미답변</a></td>
 									</tr>
 									</tbody>
 								</table>
 
 								<div aria-label="Page navigation" class="d-flex justify-content-center">
 									<ul class="pagination">
-										<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-										<li class="page-item"><a class="page-link" href="#">1</a></li>
-										<li class="page-item"><a class="page-link" href="#">2</a></li>
-										<li class="page-item"><a class="page-link" href="#">3</a></li>
-										<li class="page-item"><a class="page-link" href="#">Next</a></li>
+										<li class="page-item"><a class="page-link" th:href="@{|/${paging.type}/list|(page=${paging.prev})}">이전</a></li>
+										<li class="page-item"><a th:each="page : ${#numbers.sequence(paging.blockStart, paging.blockEnd)}" class="page-link"
+																 th:href="@{|/${paging.type}/list|(page=${page})}"><span>[[${page}]]</span></a></li>
+										<li class="page-item"><a class="page-link" th:href="@{|/${paging.type}/list|(page=${paging.next})}">다음</a></li>
 									</ul>
 								</div>
 
 							</div>
-
-						</div>
 					</div>
 				</div>
 	    	</div>
