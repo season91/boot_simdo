@@ -35,7 +35,7 @@ public class User {
     private String userProfile;
 
     @Column(columnDefinition = "varchar2(50 char) default 'ROLE_USER'")
-    protected  String role;
+    protected String role;
 
     @Temporal(TemporalType.DATE)
     @Column(columnDefinition = "date default sysdate")

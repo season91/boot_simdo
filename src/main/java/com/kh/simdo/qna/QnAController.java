@@ -1,6 +1,7 @@
 package com.kh.simdo.qna;
 
 import com.kh.simdo.user.UserAccount;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -21,8 +22,14 @@ public class QnAController {
     // q&a 목록
     @GetMapping("/list")
     public String qnaList(@AuthenticationPrincipal UserAccount userAccount, @RequestParam(defaultValue = "1") int page, Model model){
-        System.out.println("매개변수페이지:"+page);
-        model.addAllAttributes(qnAService.findQnAByUserAndIsDel(userAccount.getUser(), false, PageRequest.of(page-1, 5, Sort.Direction.DESC,"qnaRegDate")));
+        model.addAllAttributes(qnAService.qnaList(userAccount.getUser(), false, PageRequest.of(page-1, 5, Sort.Direction.DESC,"qnaRegDate")));
+        return "qna/qnalist";
+    }
+
+    // q&a admin 목록
+    @GetMapping("/all-list")
+    public String qnaAllList(@RequestParam(defaultValue = "1") int page, Model model){
+        model.addAllAttributes(qnAService.qnaAllList(PageRequest.of(page-1, 5, Sort.Direction.DESC,"qnaRegDate")));
         return "qna/qnalist";
     }
 
@@ -39,10 +46,25 @@ public class QnAController {
 
         QnA res = qnAService.insertQnA(qna);
         if(res == null){
-            model.addAttribute("alertMsg","문의등록 실패하였습니다.");
+            model.addAttribute("alertMsg","문의등록이 실패하였습니다.");
         }
         model.addAttribute("alertMsg","문의등록이 완료되었습니다.");
-        model.addAttribute("url","/qna");
+        model.addAttribute("url","/qna/list");
+        return "common/result";
+    }
+
+    // q&a 업데이트하기 (코멘드 달기)
+    @GetMapping("/coment")
+    public String qnaComent(QnA qna, Model model){
+        QnA res = qnAService.updateQnA(qna);
+        
+        if(res == null){
+            model.addAttribute("alertMsg","답변등록이 실패하였습니다.");
+        }
+        
+        model.addAttribute("alertMsg","답변등록이 완료되었습니다.");
+        model.addAttribute("url","/qna/all-list");
+
         return "common/result";
     }
 
@@ -54,5 +76,7 @@ public class QnAController {
         return "qna/detail";
 
     }
+
+    
 
 }

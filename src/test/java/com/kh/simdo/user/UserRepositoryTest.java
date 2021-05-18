@@ -28,6 +28,15 @@ public class UserRepositoryTest {
         user.setRole("ROLE_USER");
         user.setUserNm("USER");
 
+        /*Date today = new Date();
+        User user = new User();
+        user.setUserEmail("admin");
+        user.setUserPw(passwordEncoder.encode("123"));
+        user.setUserTel("01000000000");
+        user.setUserRegDate(today);
+        user.setRole("ROLE_ADMIN");
+        user.setUserNm("AY");*/
+
         userRepository.save(user);
     }
 

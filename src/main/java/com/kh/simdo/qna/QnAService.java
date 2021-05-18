@@ -23,7 +23,7 @@ public class QnAService {
         return qnARepository.save(qna);
     }
 
-    public Map<String, Object> findQnAByUserAndIsDel(User user, boolean isDel, PageRequest page){
+    public Map<String, Object> qnaList(User user, boolean isDel, PageRequest page){
         Page<QnA> qnas = qnARepository.findQnAByUserAndIsDel(user, isDel, page);
         Paging paging = Paging.builder()
                 .currentPage(page.getPageNumber()+1)
@@ -32,7 +32,7 @@ public class QnAService {
                 .type("qna")
                 .total((int)qnARepository.count())
                 .build();
-        System.out.println("페이징 이전페이지"+paging.getPrev());
+        
         Map<String, Object> commandMap = new HashMap<>();
         commandMap.put("paging", paging);
         commandMap.put("qnaList", qnas.getContent());
@@ -40,9 +40,32 @@ public class QnAService {
         return commandMap;
     }
 
-
     public QnA findQnAByQnaNoAndIsDel(long QnaNo, boolean isDel){
         return qnARepository.findQnAByQnaNoAndIsDel(QnaNo, isDel);
     }
 
+    // admin유저용 목록
+    public Map<String, Object> qnaAllList(PageRequest page){
+        Page<QnA> qnas = qnARepository.findAll(page);
+        Paging paging = Paging.builder()
+                .currentPage(page.getPageNumber()+1)
+                .blockCnt(5)
+                .cntPerPage(page.getPageSize())
+                .type("qna")
+                .total((int)qnARepository.count())
+                .build();
+
+        Map<String, Object> commandMap = new HashMap<>();
+        commandMap.put("paging", paging);
+        commandMap.put("qnaList", qnas.getContent());
+
+        return commandMap;
+    }
+
+    // coment 추가
+    public QnA updateQnA(QnA beforeQnA){
+        QnA qna = findQnAByQnaNoAndIsDel(beforeQnA.getQnaNo(), false);
+        qna.setQnaComent(beforeQnA.getQnaComent());
+        return qnARepository.save(qna);
+    }
 }

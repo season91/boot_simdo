@@ -10,7 +10,9 @@ import java.util.List;
 
 public interface QnARepository extends JpaRepository<QnA,String> {
 
+    // 일반유저 페이징
     Page<QnA> findQnAByUserAndIsDel(User user, boolean isDel, Pageable page);
 
+    // 상세
     QnA findQnAByQnaNoAndIsDel(long QnaNo, boolean isDel);
 }
