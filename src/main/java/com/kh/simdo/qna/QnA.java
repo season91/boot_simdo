@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.ManyToAny;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,7 +24,6 @@ public class QnA {
     @ManyToOne
     private User user;
 
-    private String qnaType;
     private String qnaTitle;
     private String qnaContent;
     private String qnaComent;
@@ -46,7 +44,6 @@ public class QnA {
         return "QnA{" +
                 "qnaNo=" + qnaNo +
                 ", user=" + user +
-                ", qnaType='" + qnaType + '\'' +
                 ", qnaTitle='" + qnaTitle + '\'' +
                 ", qnaContent='" + qnaContent + '\'' +
                 ", qnaComent='" + qnaComent + '\'' +
