@@ -21,7 +21,7 @@ public class UserRepositoryTest {
     public void saveNewUser() {
         Date today = new Date();
         User user = new User();
-        user.setUserEmail("test");
+        user.setUserEmail("test99");
         user.setUserPw(passwordEncoder.encode("123"));
         user.setUserTel("01000000000");
         user.setUserRegDate(today);

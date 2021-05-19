@@ -4,6 +4,7 @@ import com.kh.simdo.common.code.ConfigCode;
 import com.kh.simdo.common.mail.EmailSender;
 import com.kh.simdo.user.form.FindPwdForm;
 import com.kh.simdo.user.form.JoinForm;
+import com.kh.simdo.user.form.MyPwdForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
@@ -101,5 +102,12 @@ UserService implements UserDetailsService {
 
     public User checkToFindEmail(String userEmail, String userTel) {
         return userRepository.findByUserEmailAndUserTelAndIsLeave(userEmail, userTel, true);
+    }
+
+    public void setNewPwd(MyPwdForm myPwdForm) {
+        User user = userRepository.findByUserEmailAndIsLeave(myPwdForm.getUserEmail(), false);
+        user.setUserPw(passwordEncoder.encode(myPwdForm.getNewPw()));
+
+        userRepository.save(user);
     }
 }
