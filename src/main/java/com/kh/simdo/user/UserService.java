@@ -100,6 +100,6 @@ UserService implements UserDetailsService {
     }
 
     public User checkToFindEmail(String userEmail, String userTel) {
-        return userRepository.findByUserEmailAndUserTel(userEmail, userTel);
+        return userRepository.findByUserEmailAndUserTelAndIsLeave(userEmail, userTel, true);
     }
 }
