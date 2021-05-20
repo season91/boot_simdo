@@ -26,84 +26,13 @@
 		<section class="ftco-section ftco-no-pt ftco-no-pb ftco-about ftco-counter">
 			<div class="container">
 				<div class="row no-gutters d-flex">
-					<div class="col-md-12 col-lg-6 d-flex align-items-stretch">
-						<div class="img-about img d-flex align-items-stretch">
-							<img class="img d-flex align-self-stretch align-items-center poster" th:src="${movie.poster}"/>
-						</div>
-					</div>
 					<div class="col-md-12 col-lg-6 pl-lg-5 py-5 d-flex align-items-center">
 						<div class="p-0 px-lg-5 p-lg-0">
 							<div class="row justify-content-start pb-3">
-								<div class="col-md-12 heading-section ftco-animate">
-									<p th:text="${movie.script}"></p>
+								<div class="col-md-12 heading-section ftco-animate moviescript">
+									[[${movie.script}]]
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-md-6">
-									<div class="media block-6 services d-block ftco-animate">
-										<div th:if="${wish == null}" class="icon"><span class="icon icon-heart wish"></span></div>
-										<div th:unless="${wish == null}" class="icon"><span class="icon icon-heart wish" style="color: red"></span></div>
-										<div class="media-body">
-											<h3 class="heading mb-3">찜하기</h3>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-6">
-									<div class="media block-6 services d-block ftco-animate">
-										<div th:if="${isReview == null}" class="icon"><span class="icon icon-book"></span></div>
-										<div th:unless="${isReview == null}" class="icon"><span class="icon icon-book" style="color: lightpink"></span></div>
-										<div class="media-body">
-											<h3 class="heading mb-3">후기작성</h3>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-md-12">
-									<div class="media block-6 services d-block ftco-animate">
-										<div class="media-body">
-											<h3 class="heading mb-3">심도 후기</h3>
-											<a th:if="${review == null}" th:href="@{/mypage/writereview(mvNo=${movie.mvNo})}">후기작성하러가기</a>
-											<p th:unless="${review == null}" th:each="review : ${review}">
-												<a class="col-md-6 review" th:text="${review.reviewContent}"></a>
-											</p>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-12">
-									<div class="media block-6 services d-block ftco-animate">
-										<div class="media-body">
-											<h3 class="heading mb-3" >심도 명대사</h3>
-											<a th:if="${fms == null}" th:href="@{/mypage/writefmsline(mvNo=${movie.mvNo})}">명대사작성하러가기</a>
-											<div th:unless="${fms == null}" th:each="fmsline : ${fms}">
-												<p class="col-md-6 fmsline" th:text="${fmsline.fmlContent}"></p>
-												<select name="lan" size=1 class="choose-lan col-md-3 " id="lang">
-													<option value="en">영어</option>
-													<option value="ja">일본어</option>
-													<option value="fr">프랑스어</option>
-													<option value="zh-CN">중국어 간체</option>
-													<option value="zh-TW">중국어 번체</option>
-													<option value="ru">러시아어</option>
-													<option value="de">독일어</option>
-													<option value="es">스페인어</option>
-												</select>
-												<input th:type="hidden" th:value="${fmsline.fmlContent}" id="fmsline">
-												<button  class="btn btn-dark col-md-3 translation">번역하기</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							<div th:if="${movie.script != null}"  class="counter-wrap mb-0 ftco-animate d-flex mt-md-3">
-								<div class="text p-4 pr-4 bg-primary">
-									<p class="mb-0">
-										<a>대본보러가기</a>
-									</p>
-								</div>
-							</th:ifdiv>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -133,8 +62,6 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="/js/google-map.js"></script>
     <script src="/js/main.js"></script>
-    <script src="/js/movie.js"></script>
-	<script src="/js/papago.js"></script>
 
   </body>
 </html>

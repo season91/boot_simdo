@@ -87,4 +87,11 @@ public class MovieController {
         }
         return res;
     }
+
+    // 대본보러가기
+    @GetMapping("script")
+    public String movieScript(String mvNo, Model model){
+        model.addAttribute("movie", movieService.movieDetail(mvNo));
+        return "movie/script";
+    }
 }

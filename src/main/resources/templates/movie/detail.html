@@ -105,7 +105,7 @@
 							<div th:if="${movie.script != null}"  class="counter-wrap mb-0 ftco-animate d-flex mt-md-3">
 								<div class="text p-4 pr-4 bg-primary">
 									<p class="mb-0">
-										<a>대본보러가기</a>
+										<a th:href="@{/movie/script(mvNo=${movie.mvNo})}"><span>대본 보기</span></a>
 									</p>
 								</div>
 							</th:ifdiv>

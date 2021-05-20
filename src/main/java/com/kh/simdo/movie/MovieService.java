@@ -100,7 +100,8 @@ public class MovieService {
 
         try {
             Document doc = Jsoup.parse(new URL("https://imsdb.com/scripts/"+movieName+".html"), 5000);
-            Elements scriptElement = doc.select("#mainbody > table:nth-child(3) > tbody > tr > td:nth-child(3) > table > tbody > tr");
+            Elements scriptElement = doc.select("#mainbody > table:nth-child(3) > tbody > tr > td:nth-child(3) > table > tbody > tr > td ");
+            //#mainbody > table:nth-child(3) > tbody > tr > td:nth-child(3) > table > tbody > tr > td > pre
 
             for (Element element : scriptElement) {
 
