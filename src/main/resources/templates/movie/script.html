@@ -25,14 +25,14 @@
 
 		<section class="ftco-section ftco-no-pt ftco-no-pb ftco-about ftco-counter">
 			<div class="container">
-				<div class="row no-gutters d-flex">
-					<div class="col-md-12 col-lg-6 pl-lg-5 py-5 d-flex align-items-center">
-						<div class="p-0 px-lg-5 p-lg-0">
-							<div class="row justify-content-start pb-3">
-								<div class="col-md-12 heading-section ftco-animate moviescript">
-									[[${movie.script}]]
-								</div>
+				<div class="row no-gutters d-flex ">
+					<div class="col-md-12 col-lg-6 pl-lg-5 py-5 d-flex align-items-center ">
+						<div class="p-0 px-lg-5 p-lg-0 ">
+							<a th:href="@{/movie/script-down(mvNo=${movie.mvNo})}"><span>대본 다운로드</span></a>
+							<div class="row justify-content-start test pb-3 " >
+								[(${movie.script})]
 							</div>
+						</div>
 					</div>
 				</div>
 			</div>

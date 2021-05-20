@@ -5,12 +5,20 @@ import com.kh.simdo.mypage.fmsline.FmslineService;
 import com.kh.simdo.mypage.review.ReviewService;
 import com.kh.simdo.user.UserAccount;
 import com.kh.simdo.wish.WishService;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Map;
 
@@ -93,5 +101,22 @@ public class MovieController {
     public String movieScript(String mvNo, Model model){
         model.addAttribute("movie", movieService.movieDetail(mvNo));
         return "movie/script";
+    }
+
+    //대본 다운로드, 비동기통신
+    @GetMapping("script-down")
+    @ResponseBody
+    public ResponseEntity<FileSystemResource> movieScriptDown(String mvNo, Model model){
+        Movie movie = movieService.movieDetail(mvNo);
+
+        File file = movieService.scirptDownload(movie.getMvTitleorg().trim()+".txt", movie.getScript());
+        //내보내기
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentDisposition(ContentDisposition.builder("attachment").filename(file.getName(), Charset.forName("UTF-8"))
+                .build());
+
+        FileSystemResource resource = new FileSystemResource(file);
+        return ResponseEntity.ok().headers(headers).body(resource);
+
     }
 }

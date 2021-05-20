@@ -2,6 +2,7 @@ package com.kh.simdo.movie;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.simdo.common.util.file.FileUtil;
 import com.kh.simdo.common.util.http.HttpUtils;
 import lombok.RequiredArgsConstructor;
 import org.jsoup.Jsoup;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
@@ -100,13 +102,13 @@ public class MovieService {
 
         try {
             Document doc = Jsoup.parse(new URL("https://imsdb.com/scripts/"+movieName+".html"), 5000);
-            Elements scriptElement = doc.select("#mainbody > table:nth-child(3) > tbody > tr > td:nth-child(3) > table > tbody > tr > td ");
+            Elements scriptElement = doc.select("#mainbody > table:nth-child(3) > tbody > tr > td:nth-child(3) > table > tbody > tr > td > pre");
             //#mainbody > table:nth-child(3) > tbody > tr > td:nth-child(3) > table > tbody > tr > td > pre
 
             for (Element element : scriptElement) {
 
                 movieScript.put("name", movieName);
-                movieScript.put("script", element.children()+"");
+                movieScript.put("script", element+"");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -218,4 +220,16 @@ public class MovieService {
         return res;
     }
 
+    // 대본 다운로드
+    public File scirptDownload(String mvTitle, String script){
+        FileUtil fileUtil = new FileUtil();
+        // 대본에 태그 다 빼주기
+        String[] removeArr = {"<pre>", "</pre>", "<b>", "</b>"};
+        for (int i = 0; i < removeArr.length; i++){
+
+           script =  script.replaceAll(removeArr[i], "");
+        }
+        return fileUtil.saveScript(mvTitle, script);
+
+    }
 }

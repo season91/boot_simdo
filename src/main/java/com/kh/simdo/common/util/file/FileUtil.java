@@ -4,6 +4,8 @@ import com.kh.simdo.common.code.ConfigCode;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -59,6 +61,24 @@ public class FileUtil {
 
         // 왜 던지냐면 빈으로 등록하지도 않았고, 스프링이 동작하는 서비스나 컨트롤러에서 받아 처리해야 트랜잭션처리 및 예외처리가 가능하다.
         multipartFile.transferTo(file);
+    }
+
+    // 대본 파일 저장
+    public File saveScript(String mvTitle, String script) {
+
+        File fileDown = new File(mvTitle);
+        FileOutputStream fos = null;
+        if(!fileDown.exists()){
+            try {
+                fos = new FileOutputStream(mvTitle);
+                fos.write(script.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        return fileDown;
     }
 
     // 파일 삭제
