@@ -42,7 +42,7 @@ public class FmslineService {
     }
 
     //아영: 영화상세에 들어갈 명대사 내역
-    public List<Fmsline> findByMovieAndIsFmlDel(Movie movie, boolean isFmlDel){
+    public List<Fmsline> findFmsList(Movie movie, boolean isFmlDel){
         return fmslineRepository.findByMovieAndIsFmlDel(movie, isFmlDel);
     }
 

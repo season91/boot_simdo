@@ -38,7 +38,7 @@ public class WishService {
     }
 
     //영화 상세에 보여줄 찜내역 확인
-    public Wish findByUserNoAndMvNoAndIsWishDel(long userNo, String mvNo, boolean isWishDel){
+    public Wish findWish(long userNo, String mvNo, boolean isWishDel){
         return wishRepository.findByUserNoAndMvNoAndIsWishDel(userNo, mvNo, false);
     }
 }

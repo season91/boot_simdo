@@ -38,12 +38,12 @@ public class ReviewService {
     }
 
     //아영 : 영화상세에 후기작성 여부 표시
-    public Review findByUserAndMovieAndIsReviewDel(User user, Movie movie){
+    public Review isReview(User user, Movie movie){
         return reviewRepository.findByUserAndMovieAndIsReviewDel(user, movie, false);
     }
 
     //아영: 영화상세에 후기내역 표시를 위한
-    public List<Review> findByIsReviewDelOrderByReviewRegDateDesc(boolean isReviewDel){
-        return reviewRepository.findByIsReviewDelOrderByReviewRegDateDesc(isReviewDel);
+    public List<Review> findReviewList(Movie movie, boolean isReviewDel){
+        return reviewRepository.findByMovieAndIsReviewDelOrderByReviewRegDateDesc(movie, isReviewDel);
     }
 }

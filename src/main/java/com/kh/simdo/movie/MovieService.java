@@ -94,7 +94,6 @@ public class MovieService {
     // 영화 대본정보 크롤링으로 가져온다.
     public Map<String, String> crwalingMovieScript(String movieName) {
 
-        //movieName = Joker
         if(movieName.contains(" ")){
             movieName = movieName.replaceAll(" ","-");
         }
@@ -183,8 +182,7 @@ public class MovieService {
         return movieRepository.findMovieByMvNo(mvNo);
     }
 
-
-    // 아영 파파고
+    // 파파고
     public String papagoAPI(String paramText, String lan){
         ObjectMapper om = new ObjectMapper();
         HttpUtils util = new HttpUtils();

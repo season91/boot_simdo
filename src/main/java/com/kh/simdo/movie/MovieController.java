@@ -64,16 +64,16 @@ public class MovieController {
         // 2-1. 후기여부 전송
         Movie movie = new Movie();
         movie.setMvNo(mvNo);
-        model.addAttribute("isReview", reviewService.findByUserAndMovieAndIsReviewDel(userAccount.getUser(), movie));
+        model.addAttribute("isReview", reviewService.isReview(userAccount.getUser(), movie));
         
         // 2-2. 후기내역 전송
-        model.addAttribute("review",reviewService.findByIsReviewDelOrderByReviewRegDateDesc(false));
+        model.addAttribute("review", reviewService.findReviewList(movie, false));
 
         // 3. 찜여부 전송
-        model.addAttribute("wish", wishService.findByUserNoAndMvNoAndIsWishDel(userAccount.getUser().getUserNo(), mvNo, false));
+        model.addAttribute("wish", wishService.findWish(userAccount.getUser().getUserNo(), mvNo, false));
 
         // 4. 명대사내역 전송
-        model.addAttribute("fms",fmslineService.findByMovieAndIsFmlDel(movie, false));
+        model.addAttribute("fms",fmslineService.findFmsList(movie, false));
 
         return "movie/detail";
     }

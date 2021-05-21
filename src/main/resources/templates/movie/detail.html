@@ -26,9 +26,9 @@
 		<section class="ftco-section ftco-no-pt ftco-no-pb ftco-about ftco-counter">
 			<div class="container">
 				<div class="row no-gutters d-flex">
-					<div class="col-md-12 col-lg-6 d-flex align-items-stretch">
-						<div class="img-about img d-flex align-items-stretch">
-							<img class="img d-flex align-self-stretch align-items-center poster" th:src="${movie.poster}"/>
+					<div class="col-md-12 col-lg-6 d-flex align-items-center">
+						<div class="img-about img d-flex align-items-center">
+							<img class="img d-flex align-self-stretch align-items-center poster" th:src="${movie.poster}" style="height: 726px"/>
 						</div>
 					</div>
 					<div class="col-md-12 col-lg-6 pl-lg-5 py-5 d-flex align-items-center">
@@ -70,9 +70,9 @@
 									<div class="media block-6 services d-block ftco-animate">
 										<div class="media-body">
 											<h3 class="heading mb-3">심도 후기</h3>
-											<a th:if="${review == null}" th:href="@{/mypage/writereview(mvNo=${movie.mvNo})}">후기작성하러가기</a>
-											<p th:unless="${review == null}" th:each="review : ${review}">
-												<a class="col-md-6 review" th:text="${review.reviewContent}"></a>
+											<a th:if="${review.isEmpty()}" th:href="@{/mypage/writereview(mvNo=${movie.mvNo})}">후기작성하러가기</a>
+											<p th:unless="${review == null}" th:each="review : ${review}" >
+												[(${review.user.userNm})] : [(${review.reviewContent})]
 											</p>
 										</div>
 									</div>
@@ -81,9 +81,9 @@
 									<div class="media block-6 services d-block ftco-animate">
 										<div class="media-body">
 											<h3 class="heading mb-3" >심도 명대사</h3>
-											<a th:if="${fms == null}" th:href="@{/mypage/writefmsline(mvNo=${movie.mvNo})}">명대사작성하러가기</a>
+											<a th:if="${fms.isEmpty()}" th:href="@{/mypage/writefmsline(mvNo=${movie.mvNo})}">명대사작성하러가기</a>
 											<div th:unless="${fms == null}" th:each="fmsline : ${fms}">
-												<p class="col-md-6 fmsline" th:text="${fmsline.fmlContent}"></p>
+												<p class="fmsline" th:text="${fmsline.fmlContent}"></p>
 												<select name="lan" size=1 class="choose-lan col-md-3 " id="lang">
 													<option value="en">영어</option>
 													<option value="ja">일본어</option>
@@ -94,8 +94,8 @@
 													<option value="de">독일어</option>
 													<option value="es">스페인어</option>
 												</select>
-												<input th:type="hidden" th:value="${fmsline.fmlContent}" id="fmsline">
-												<button  class="btn btn-dark col-md-3 translation">번역하기</button>
+												<input type="hidden" th:value="${fmsline.fmlContent}" id="fmsline">
+												<button  class="btn btn-dark col-md-4 translation">번역하기</button>
 											</div>
 										</div>
 									</div>

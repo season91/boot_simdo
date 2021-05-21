@@ -1,7 +1,6 @@
 (()=>{
     let wishcolor = document.querySelector('.wish').style.color;
     let mvno = "?mvNo="+document.querySelector('.mvno').value;
-    console.dir(wishcolor);
 
     let wishAdd = ()=>{
         let headerObj = new Headers();

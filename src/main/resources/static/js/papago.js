@@ -1,6 +1,5 @@
 (()=>{
     document.querySelector('.translation').addEventListener('click',()=>{
-        console.dir("오나?");
         let url = '/movie/translation';
         let text = document.querySelector('#fmsline').value;
         let lan = document.querySelector('#lang').value;
