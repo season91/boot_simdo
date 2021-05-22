@@ -71,11 +71,22 @@
 
     <th:block th:fragment="flg_header">
         <header>
-            <div class="container">
+            <div class="container d-flex justify-content-between align-content-center">
                 <div class="colorlib-navbar-brand">
                     <a class="colorlib-logo" href="index.html">Simdo</a>
                 </div>
-                <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle"><i></i></a>
+
+                <!--영화 검색창-->
+                <div class="sidebar-box d-flex justify-content-between align-content-center" style="width: 30% !important;">
+                    <form action="#" class="search-form">
+                        <div class="form-group mb-0" style="height: 1vh">
+                            <span class="icon icon-search"></span>
+                            <input type="text" class="form-control" style="height: 1vh !important; font-size: 15px;" placeholder="Search">
+                        </div>
+                    </form>
+                    <a href="#" class="js-colorlib-nav-toggle colorlib-nav-toggle" style="margin: 0 !important;"><i></i></a>
+                </div>
+
             </div>
         </header>
     </th:block>
