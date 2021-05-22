@@ -9,11 +9,13 @@ import com.kh.simdo.mypage.review.Review;
 import com.kh.simdo.mypage.review.ReviewService;
 import com.kh.simdo.mypage.review.form.ReviewForm;
 import com.kh.simdo.mypage.review.form.UpdateReviewForm;
+import com.kh.simdo.user.User;
 import com.kh.simdo.user.UserAccount;
 import com.kh.simdo.user.UserRepository;
 import com.kh.simdo.user.UserService;
 import com.kh.simdo.user.form.MyPwdForm;
 import com.kh.simdo.user.validator.MyPwdFormValidator;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -207,6 +209,15 @@ public class MypageController {
         model.addAttribute("url", "/mypage/myinfomain");
 
         return "common/result";
+    }
+
+    //회원정보 변경
+    @GetMapping("myinfo")
+    public String myInfo(@AuthenticationPrincipal UserAccount userAccount, Model model) {
+        User user = userAccount.getUser();
+        model.addAttribute("user", user);
+
+        return "mypage/myinfo";
     }
 
 }
