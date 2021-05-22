@@ -9605,7 +9605,7 @@ textarea.form-control {
     transform: translateY(-50%); }
 
 .sidebar-box {
-  margin-bottom: 30px;
+  /*margin-bottom: 30px;*/
   padding: 25px;
   font-size: 15px;
   width: 100%; }
