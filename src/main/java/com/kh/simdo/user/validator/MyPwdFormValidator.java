@@ -1,10 +1,8 @@
 package com.kh.simdo.user.validator;
 
-import com.kh.simdo.user.UserAccount;
 import com.kh.simdo.user.UserRepository;
 import com.kh.simdo.user.form.MyPwdForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

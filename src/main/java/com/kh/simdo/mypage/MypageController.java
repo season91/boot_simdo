@@ -13,7 +13,9 @@ import com.kh.simdo.user.User;
 import com.kh.simdo.user.UserAccount;
 import com.kh.simdo.user.UserRepository;
 import com.kh.simdo.user.UserService;
+import com.kh.simdo.user.form.MyInfoForm;
 import com.kh.simdo.user.form.MyPwdForm;
+import com.kh.simdo.user.validator.MyInfoFormValidator;
 import com.kh.simdo.user.validator.MyPwdFormValidator;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,18 +39,26 @@ public class MypageController {
     private final FmslineService fmslineService;
     private final UserService userService;
     private final MyPwdFormValidator myPwdFormValidator;
+    private final MyInfoFormValidator myInfoFormValidator;
 
-    public MypageController(MovieService movieService, ReviewService reviewService, FmslineService fmslineService, UserService userService, MyPwdFormValidator myPwdFormValidator) {
+    public MypageController(MovieService movieService, ReviewService reviewService, FmslineService fmslineService
+            , UserService userService, MyPwdFormValidator myPwdFormValidator, MyInfoFormValidator myInfoFormValidator) {
         this.movieService = movieService;
         this.reviewService = reviewService;
         this.fmslineService = fmslineService;
         this.userService = userService;
         this.myPwdFormValidator = myPwdFormValidator;
+        this.myInfoFormValidator = myInfoFormValidator;
     }
 
     @InitBinder(value = "myPwdForm")
     public void setMyPwdFormValidator(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(myPwdFormValidator);
+    }
+
+    @InitBinder(value = "myInfoForm")
+    public void setMyInfoFormValidator(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(myInfoFormValidator);
     }
 
     //mypage 메인
@@ -198,7 +208,6 @@ public class MypageController {
     //비밀번호 변경
     @PostMapping("mypwdimpl")
     public String myPwdImpl(@Valid MyPwdForm myPwdForm, Errors errors, Model model) {
-        System.out.println("넘어온 값 : " + myPwdForm);
         if (errors.hasErrors()) {
             return "mypage/mypwd";
         }
@@ -211,13 +220,23 @@ public class MypageController {
         return "common/result";
     }
 
-    //회원정보 변경
+    //회원정보 변경 페이지로 이동
     @GetMapping("myinfo")
-    public String myInfo(@AuthenticationPrincipal UserAccount userAccount, Model model) {
+    public String myInfo(@AuthenticationPrincipal UserAccount userAccount, Model model, MyInfoForm myInfoForm) {
         User user = userAccount.getUser();
         model.addAttribute("user", user);
 
         return "mypage/myinfo";
+    }
+
+    //회원정보 변경
+    @PostMapping("myinfoimpl")
+    public String myInfoImpl(@Valid MyInfoForm myInfoForm, Errors errors, Model model) {
+        if (errors.hasErrors()) {
+            return "mypage/myinfo";
+        }
+
+        return "common/result";
     }
 
 }
