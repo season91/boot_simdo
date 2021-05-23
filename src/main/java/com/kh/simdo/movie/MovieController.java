@@ -119,4 +119,11 @@ public class MovieController {
         return ResponseEntity.ok().headers(headers).body(resource);
 
     }
+
+    //영화 검색
+    @GetMapping("search")
+    public String movieSearch(){
+
+        return "movie/search";
+    }
 }
