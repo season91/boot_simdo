@@ -232,9 +232,15 @@ public class MypageController {
     //회원정보 변경
     @PostMapping("myinfoimpl")
     public String myInfoImpl(@Valid MyInfoForm myInfoForm, Errors errors, Model model) {
+        System.out.println("넘어온 값 : " + myInfoForm);
         if (errors.hasErrors()) {
             return "mypage/myinfo";
         }
+
+        userService.updateInfo(myInfoForm);
+
+        model.addAttribute("alertMsg", "회원정보가 변경되었습니다.");
+        model.addAttribute("url", "/mypage/myinfomain");
 
         return "common/result";
     }

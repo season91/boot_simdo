@@ -53,7 +53,7 @@
                 <div class="form-group">
 					<label>닉네임</label>
                   <input type="text" name="userNm" id="userNm" class="form-control" placeholder="Your Nickname">
-                    <small class="text-danger" id="pw_check"></small>
+                    <small class="text-danger" id="nm_check"></small>
                     <small class="text-danger"></small>
                 </div>
 				  <div class="form-group">
@@ -74,7 +74,7 @@
                   <div class="form-group">
                       <label>전화 번호</label>
                       <div class="d-flex">
-                          <input type="text" name="userTel" id="userTel" class="form-control mr-2" placeholder="Your Phone" required>
+                          <input type="text" name="userTel" id="userTel" class="form-control mr-2" placeholder="Your Phone">
                           <input type="button" onclick="certSms()" value="인증번호 발송" class="btn btn-primary py-3 px-5">
                       </div>
                       <small class="text-danger" id="tel_check"></small>
@@ -82,7 +82,7 @@
                   </div>
                   <div class="form-group">
                       <div class="d-flex">
-                          <input type="text" name="certNum" id="certNum" class="form-control mr-2" placeholder="인증 번호 입력" required>
+                          <input type="text" name="certNum" id="certNum" class="form-control mr-2" placeholder="인증 번호 입력">
                           <input type="button" onclick="certNumConfirm()" value="확인" class="btn btn-primary py-3 px-5">
                       </div>
                       <small class="text-danger" id="certNum_check"></small>
@@ -123,32 +123,6 @@
 
     <script type="text/javascript" th:replace="fragments :: ajax-csrf-header"></script>
     <script type="text/javascript">
-        let emailCheckFlg = false;
-        let emailCheck = () => {
-            let userEmail = document.querySelector('#userEmail').value;
-            let headers = getCsrfHeader();
-            headers.append("content-type", "x-www-form-urlencoded");
-            if(userEmail){
-                fetch("/user/emailcheck?userEmail=" + userEmail,{
-                    method:"get",
-                    headers:headers
-                })
-                .then(response => response.text())
-                .then(text => {
-                    if (text == 'success') {
-                        emailCheckFlg = true;
-                        email_check.innerHTML = '사용 가능한 이메일 입니다.';
-                    }else {
-                        emailCheckFlg = false;
-                        email_check.innerHTML = '이미 가입된 이메일 입니다.';
-                        userEmail.value="";
-                    }
-                })
-            }else{
-                alert("이메일을 입력해주세요.")
-            }
-        }
-
         let certSms = () => {
             let userTel = document.querySelector('#userTel').value;
             let telRegExp = /^\d{11}$/;
@@ -204,41 +178,30 @@
             }
         };
 
-        document.querySelector('#frm_join').addEventListener('submit', (e)=>{
-            let userPw = document.querySelector('#userPw').value;
-            let confirmPw = document.querySelector('#confirmPw').value;
+        document.querySelector('#frm_myinfo').addEventListener('submit', (e)=>{
             let userTel = document.querySelector('#userTel').value;
-            let pwRegExp = /^(?!.*[ㄱ-힣])(?=.*\W)(?=.*\d)(?=.*[a-zA-Z])(?=.{8,})/;
+            let userNm = document.querySelector('#userNm').value;
             let telRegExp = /^\d{11}$/;
+            let nmRegExp = /^(?=.{0,6}$).*/;
 
-            if(!emailCheckFlg){
-                e.preventDefault();
-                alert("이메일 중복 검사를 통과하지 못하셨습니다.");
-                document.querySelector('#userEmail').focus()
+            if (userTel){
+                if (!(telRegExp.test(userTel))){
+                    e.preventDefault();
+                    tel_check.innerHTML = '전화번호는 \'-\'를 제외한 11자리 숫자를 입력해주세요.';
+                    document.querySelector('#userTel').value='';
+                }
             }
 
-            if(!(pwRegExp.test(userPw))){
-                //form의 데이터 전송을 막음
-                e.preventDefault();
-                pw_check.innerHTML = '비밀번호는 숫자,영문자,특수문자 조합의 8글자 이상인 문자열이어야 합니다.';
-                document.querySelector('#userPw').value='';
-            }
-
-            if (userPw != confirmPw) {
-                e.preventDefault();
-                pw_confirm.innerHTML = '비밀번호가 일치하지 않습니다.';
-                document.querySelector('#confirmPw').value='';
-            }
-
-            if (!(telRegExp.test(userTel))){
-                e.preventDefault();
-                tel_check.innerHTML = '전화번호는 \'-\'를 제외한 11자리 숫자를 입력해주세요.';
-                document.querySelector('#userTel').value='';
+            if (userNm){
+                if (!(nmRegExp.test(userNm))){
+                    e.preventDefault();
+                    nm_check.innerHTML = '닉네임은 6자 이하로 입력해주세요.';
+                    document.querySelector('#userNm').value = '';
+                }
             }
 
             if (!certNumFlg) {
-                e.preventDefault();
-                alert("전화번호 인증 검사를 통과하지 못하셨습니다.");
+                userTel = "";
             }
         });
     </script>

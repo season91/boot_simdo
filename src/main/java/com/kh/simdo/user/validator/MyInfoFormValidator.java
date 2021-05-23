@@ -25,10 +25,19 @@ public class MyInfoFormValidator implements Validator {
     @Override
     public void validate(Object target, Errors errors) {
         Pattern telPattern = Pattern.compile("^\\d{11}$");
+        Pattern nmPattern = Pattern.compile("^(?=.{0,6}$).*");
         MyInfoForm user = (MyInfoForm) target;
 
-        if (!telPattern.matcher(user.getUserTel()).find()) {
-            errors.rejectValue("userTel", "error.userTel", "전화번호는 '-'를 제외한 11자리 숫자를 입력해주세요.");
+        if (user.getUserTel() != "") {
+            if (!telPattern.matcher(user.getUserTel()).find()) {
+                errors.rejectValue("userTel", "error.userTel", "전화번호는 '-'를 제외한 11자리 숫자를 입력해주세요.");
+            }
+        }
+
+        if (user.getUserNm() != "") {
+            if (!nmPattern.matcher(user.getUserNm()).find()) {
+                errors.rejectValue("userNm", "error.userNm", "닉네임은 6자 이하로 입력해주세요.");
+            }
         }
     }
 
