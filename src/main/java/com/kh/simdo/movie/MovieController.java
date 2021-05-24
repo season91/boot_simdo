@@ -122,8 +122,8 @@ public class MovieController {
 
     //영화 검색
     @GetMapping("search")
-    public String movieSearch(){
-
+    public String movieSearch(String keyword){
+        System.out.println(keyword);
         return "movie/search";
     }
 }
