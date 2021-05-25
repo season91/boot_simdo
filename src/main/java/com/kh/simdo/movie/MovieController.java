@@ -122,8 +122,9 @@ public class MovieController {
 
     //영화 검색
     @GetMapping("search")
-    public String movieSearch(String keyword){
+    public String movieSearch(String keyword, Model model){
         System.out.println(keyword);
+        model.addAttribute("movieList", movieService.searchMovie(keyword));
         return "movie/search";
     }
 }

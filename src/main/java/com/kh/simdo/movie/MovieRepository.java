@@ -14,9 +14,11 @@ public interface MovieRepository extends JpaRepository<Movie, String> {
     // 영화 장르별 조회 List
     List<Movie> findMovieByGenreContains(String genre);
 
-    // 영화 제목으로 조회 List
+    // 영화 제목으로 조회 List. 영화검색
     List<Movie> findMovieByMvTitleContains(String title);
 
     // 영화 번호로 조회 1개
     Movie findMovieByMvNo(String mvNo);
+    
+    
 }

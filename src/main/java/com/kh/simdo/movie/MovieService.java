@@ -177,6 +177,12 @@ public class MovieService {
         return movieRepository.findMovieByNationContains("미국");
     }
 
+    // 영화 검색
+    public List<Movie> searchMovie(String mvTitle){
+        return movieRepository.findMovieByMvTitleContains(mvTitle);
+    }
+
+
     // 영화 상세
     public Movie movieDetail(String mvNo){
         return movieRepository.findMovieByMvNo(mvNo);
@@ -230,4 +236,6 @@ public class MovieService {
         return fileUtil.saveScript(mvTitle, script);
 
     }
+
+
 }
