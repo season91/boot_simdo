@@ -36,13 +36,22 @@
 									<div class="icon d-flex align-items-center mb-5">
 
 										<div class="position pl-3">
-											<h4 class="mb-0" th:text="${movie.director}">Jamie Jonson</h4>
+											<h4 class="mb-0" th:text="${movie.director}"></h4>
 											<span th:text="${movie.nation}"></span>
 										</div>
 									</div>
 									<h2 class="mb-4"><a href="blog-single.html" th:text="${movie.mvTitleorg}"></a></h2>
 									<p th:text="${movie.plot}"></p>
 									<p class="mb-0 mt-4"><a th:href="@{/movie/detail(mvNo=${movie.mvNo})}" class="btn btn-primary">Read more <span class="ion-ios-arrow-forward"></span></a></p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-12 blog-wrap bg-darken" th:if="${movieList.isEmpty()}">
+						<div class="text p-md-5 p-4 ftco-animate">
+							<div class="icon d-flex align-items-center mb-5">
+								<div class="position pl-3">
+									<h2 class="mb-0" style="color: white">검색 결과가 없습니다.</h2>
 								</div>
 							</div>
 						</div>

@@ -125,6 +125,6 @@ public class MovieController {
     public String movieSearch(String keyword, Model model){
         System.out.println(keyword);
         model.addAttribute("movieList", movieService.searchMovie(keyword));
-        return "movie/search";
+        return "movie/movielist";
     }
 }
