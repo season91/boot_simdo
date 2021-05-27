@@ -67,13 +67,13 @@ public class MovieController {
         model.addAttribute("isReview", reviewService.isReview(userAccount.getUser(), movie));
         
         // 2-2. 후기내역 전송
-        model.addAttribute("review", reviewService.findReviewList(movie, false));
+        model.addAttribute("reviewList", reviewService.findReviewList(movie, false));
 
         // 3. 찜여부 전송
         model.addAttribute("wish", wishService.findWish(userAccount.getUser().getUserNo(), mvNo, false));
 
         // 4. 명대사내역 전송
-        model.addAttribute("fms",fmslineService.findFmsList(movie, false));
+        model.addAttribute("fmsList",fmslineService.findFmsList(movie, false));
 
         return "movie/detail";
     }
@@ -126,5 +126,21 @@ public class MovieController {
         System.out.println(keyword);
         model.addAttribute("movieList", movieService.searchMovie(keyword));
         return "movie/movielist";
+    }
+
+    //영화상세내 댓글 좋아요. 비동기통신
+    @GetMapping("review-like")
+    @ResponseBody
+    public String reviewLike(String reviewNo){
+        reviewService.reviewLike(reviewNo);
+        return "success";
+    }
+
+    //영화상세내 댓글 좋아요. 비동기통신
+    @GetMapping("review-Hate")
+    @ResponseBody
+    public String reviewHate(String reviewNo){
+        reviewService.reviewHate(reviewNo);
+        return "success";
     }
 }

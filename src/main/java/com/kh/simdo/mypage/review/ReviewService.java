@@ -46,4 +46,20 @@ public class ReviewService {
     public List<Review> findReviewList(Movie movie, boolean isReviewDel){
         return reviewRepository.findByMovieAndIsReviewDelOrderByReviewRegDateDesc(movie, isReviewDel);
     }
+
+    //아영: 리뷰 좋아요 +1 업데이트
+    public Review reviewLike(String reviewNo){
+        Review review = reviewRepository.findByReviewNo(reviewNo);
+        review.setReviewLike(review.getReviewLike()+1);
+        return reviewRepository.save(review);
+
+    }
+
+    //아영: 리뷰 싫어요 +1 업데이트
+    public Review reviewHate(String reviewNo){
+        Review review = reviewRepository.findByReviewNo(reviewNo);
+        review.setReviewHate(review.getReviewHate()+1);
+        return reviewRepository.save(review);
+
+    }
 }
