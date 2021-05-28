@@ -72,7 +72,7 @@
 											<h3 class="heading mb-3">심도 후기</h3>
 											<a th:if="${reviewList.isEmpty()}" th:href="@{/mypage/writereview(mvNo=${movie.mvNo})}">후기작성하러가기</a>
 											<p th:unless="${reviewList == null}" th:each="review : ${reviewList}" >
-												[(${review.user.userNm})] : [(${review.reviewContent})] <span th:onclick="reviewLike()"><i class="icon reviewLike icon-favorite"></i></span>
+												[(${review.user.userNm})] : [(${review.reviewContent})] <span th:onclick="reviewLike((${review.reviewNo}))"><i class="icon reviewLike icon-favorite"></i></span>
 											</p>
 										</div>
 									</div>
