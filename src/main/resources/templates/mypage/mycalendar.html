@@ -2,6 +2,13 @@
 <html lang="en">
 <head>
 	<th:block th:insert="fragments :: flg_head"/>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/main.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/locales-all.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/locales-all.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.7.0/package.json"></script>
 </head>
   <body>
 
@@ -30,53 +37,9 @@
       </section>
 
 	    <section class="ftco-section ftco-no-pt ftco-no-pb ftco-about ftco-counter">
-	    	<div class="container">
-		    	<div class="row no-gutters d-flex">
-	    			<div class="col-md-12 col-lg-6 d-flex align-items-stretch">
-	    				<div class="img-about img d-flex align-items-stretch">
-		    				<div class="img d-flex align-self-stretch align-items-center" style="background-image:url(/images/about.jpg);">
-		    				</div>
-	    				</div>
-	    			</div>
-	    			<div class="col-md-12 col-lg-6 pl-lg-5 py-5 d-flex align-items-center">
-	    				<div class="p-0 px-lg-5 p-lg-0">
-		    				<div class="row justify-content-start pb-3">
-				          <div class="col-md-12 heading-section ftco-animate">
-				          	<span class="subheading">Welcome</span>
-				            <h2 class="mb-4">Erase is A Magazine Website</h2>
-				            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country.</p>
-				          </div>
-				        </div>
-				        <div class="row">
-				        	<div class="col-md-6">
-				        		<div class="media block-6 services d-block ftco-animate">
-				              <div class="icon"><span class="flaticon-idea"></span></div>
-				              <div class="media-body">
-				                <h3 class="heading mb-3">Writing</h3>
-				                <p>A small river named Duden flows by their place and supplies.</p>
-				              </div>
-				            </div> 
-				        	</div>
-				        	<div class="col-md-6">
-				        		<div class="media block-6 services d-block ftco-animate">
-				              <div class="icon"><span class="flaticon-idea"></span></div>
-				              <div class="media-body">
-				                <h3 class="heading mb-3">Web Design</h3>
-				                <p>A small river named Duden flows by their place and supplies.</p>
-				              </div>
-				            </div> 
-				        	</div>
-				        </div>
-			          <div class="counter-wrap mb-0 ftco-animate d-flex mt-md-3">
-		              <div class="text p-4 pr-5 bg-primary">
-		              	<p class="mb-0">
-			                <span class="number" data-number="356">0</span>
-			                <span>Finished Articles</span>
-		                </p>
-		              </div>
-			          </div>
-		          </div>
-		        </div>
+	    	<div class="container mt-4 mb-4">
+				<h1 class="text-center mb-2">나의 영화 달력</h1>
+				<div id="calendar"></div>
 	        </div>
 	      </div>
 	    </section>
@@ -105,6 +68,17 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
     <script src="/js/google-map.js"></script>
     <script src="/js/main.js"></script>
-    
+
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			var calendarEl = document.getElementById('calendar');
+			var calendar = new FullCalendar.Calendar(calendarEl, {
+				initialView: 'dayGridMonth'
+			});
+			calendar.render();
+		});
+
+	</script>
+
   </body>
 </html>

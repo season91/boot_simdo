@@ -142,4 +142,8 @@ UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
+    public User findByUserNo(long userNo) {
+        return userRepository.findByUserNo(userNo);
+    }
+
 }

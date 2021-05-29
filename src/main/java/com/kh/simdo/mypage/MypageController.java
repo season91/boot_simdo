@@ -223,8 +223,18 @@ public class MypageController {
     //회원정보 변경 페이지로 이동
     @GetMapping("myinfo")
     public String myInfo(@AuthenticationPrincipal UserAccount userAccount, Model model, MyInfoForm myInfoForm) {
-        User user = userAccount.getUser();
+        long userNo = userAccount.getUser().getUserNo();
+        User user = userService.findByUserNo(userNo);
         model.addAttribute("user", user);
+
+        String userBirth = "";
+
+        if (user.getUserBirth() != null) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            userBirth = simpleDateFormat.format(user.getUserBirth());
+        }
+
+        model.addAttribute("userBirth", userBirth);
 
         return "mypage/myinfo";
     }
