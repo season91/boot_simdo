@@ -72,7 +72,7 @@
 											<h3 class="heading mb-3">심도 후기</h3>
 											<a th:if="${reviewList.isEmpty()}" th:href="@{/mypage/writereview(mvNo=${movie.mvNo})}">후기작성하러가기</a>
 											<p th:unless="${reviewList == null}" th:each="review : ${reviewList}" >
-												[(${review.user.userNm})] : [(${review.reviewContent})] <span th:onclick="reviewLike((${review.reviewNo}))"><i class="icon reviewLike icon-favorite"></i></span>
+												[(${review.user.userNm})] : [(${review.reviewContent})] <span id="reviewLikeCnt" th:text="${review.reviewLike}"></span><i th:onclick="reviewLike([[${review.reviewNo}]])"  class="icon reviewLike icon-favorite"></i>
 											</p>
 										</div>
 									</div>
@@ -142,9 +142,24 @@
     <script src="/js/movie.js"></script>
 	<script src="/js/papago.js"></script>
 	<script type="text/javascript" th:inline="javascript">
-		function reviewLike(test){
+		let reviewLike = (reviewNo) =>{
+			let reviewLikeCnt = document.querySelector('#reviewLikeCnt');
+			let headerObj = new Headers();
+			headerObj.append('content-type', "application/x-www-form-urlencoded");
 
-			console.dir(test);
+			fetch("/movie/review-like?reviewNo="+reviewNo,{
+				method:"get",
+				header : headerObj
+			}).then(response => {
+				if(response.ok){
+					console.dir(response.text());
+					return response.text();
+				}
+			}).then(text => {
+				console.dir(text);
+				return reviewLikeCnt.innerText = text();
+			})
+
 		}
 	</script>
 

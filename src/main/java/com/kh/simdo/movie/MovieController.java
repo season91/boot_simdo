@@ -2,6 +2,7 @@ package com.kh.simdo.movie;
 
 import com.google.gson.Gson;
 import com.kh.simdo.mypage.fmsline.FmslineService;
+import com.kh.simdo.mypage.review.Review;
 import com.kh.simdo.mypage.review.ReviewService;
 import com.kh.simdo.user.UserAccount;
 import com.kh.simdo.wish.WishService;
@@ -131,9 +132,9 @@ public class MovieController {
     //영화상세내 댓글 좋아요. 비동기통신
     @GetMapping("review-like")
     @ResponseBody
-    public String reviewLike(String reviewNo){
-        reviewService.reviewLike(reviewNo);
-        return "success";
+    public int reviewLike(String reviewNo){
+        Review review = reviewService.reviewLike(reviewNo);
+        return review.getReviewLike();
     }
 
     //영화상세내 댓글 좋아요. 비동기통신
