@@ -130,7 +130,7 @@ UserService implements UserDetailsService {
             user.setUserNm(myInfoForm.getUserNm());
         }
         if (myInfoForm.getUserGender() != null) {
-            user.setUserTel(myInfoForm.getUserTel());
+            user.setUserGender(myInfoForm.getUserGender());
         }
         if (myInfoForm.getUserBirth() != "") {
             user.setUserBirth(Date.valueOf(myInfoForm.getUserBirth()));
