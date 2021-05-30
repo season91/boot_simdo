@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -41,4 +42,10 @@ public class WishService {
     public Wish findWish(long userNo, String mvNo, boolean isWishDel){
         return wishRepository.findByUserNoAndMvNoAndIsWishDel(userNo, mvNo, false);
     }
+
+    //민희: 찜목록에서 보여줄 찜한 영화 리스트 받기
+    public List<Wish> findByUserNoAndIsWishDel(long userNo, boolean isWishDel) {
+        return wishRepository.findByUserNoAndIsWishDel(userNo, false);
+    }
+
 }

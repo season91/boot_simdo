@@ -1,5 +1,6 @@
 package com.kh.simdo.mypage;
 
+import com.kh.simdo.movie.Movie;
 import com.kh.simdo.movie.MovieService;
 import com.kh.simdo.mypage.fmsline.Fmsline;
 import com.kh.simdo.mypage.fmsline.FmslineService;
@@ -11,14 +12,13 @@ import com.kh.simdo.mypage.review.form.ReviewForm;
 import com.kh.simdo.mypage.review.form.UpdateReviewForm;
 import com.kh.simdo.user.User;
 import com.kh.simdo.user.UserAccount;
-import com.kh.simdo.user.UserRepository;
 import com.kh.simdo.user.UserService;
 import com.kh.simdo.user.form.MyInfoForm;
 import com.kh.simdo.user.form.MyPwdForm;
 import com.kh.simdo.user.validator.MyInfoFormValidator;
 import com.kh.simdo.user.validator.MyPwdFormValidator;
-import com.sun.org.apache.xpath.internal.operations.Mod;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.kh.simdo.wish.Wish;
+import com.kh.simdo.wish.WishService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +29,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 @RequestMapping("mypage")
 @Controller
@@ -40,15 +42,17 @@ public class MypageController {
     private final UserService userService;
     private final MyPwdFormValidator myPwdFormValidator;
     private final MyInfoFormValidator myInfoFormValidator;
+    private final WishService wishService;
 
     public MypageController(MovieService movieService, ReviewService reviewService, FmslineService fmslineService
-            , UserService userService, MyPwdFormValidator myPwdFormValidator, MyInfoFormValidator myInfoFormValidator) {
+            , UserService userService, MyPwdFormValidator myPwdFormValidator, MyInfoFormValidator myInfoFormValidator, WishService wishService) {
         this.movieService = movieService;
         this.reviewService = reviewService;
         this.fmslineService = fmslineService;
         this.userService = userService;
         this.myPwdFormValidator = myPwdFormValidator;
         this.myInfoFormValidator = myInfoFormValidator;
+        this.wishService = wishService;
     }
 
     @InitBinder(value = "myPwdForm")
@@ -253,6 +257,23 @@ public class MypageController {
         model.addAttribute("url", "/mypage/myinfomain");
 
         return "common/result";
+    }
+
+    //찜목록 페이지로 이동
+    @GetMapping("mymovie")
+    public String myMovie(long userNo, Model model) {
+        List<Wish> wishList = wishService.findByUserNoAndIsWishDel(userNo, false);
+        List<Movie> movieList = new ArrayList<>();
+
+        for (Wish wish : wishList) {
+            Movie movie = movieService.movieDetail(wish.getMvNo());
+            movieList.add(movie);
+        }
+
+        model.addAttribute("wishList", wishList);
+        model.addAttribute("movieList", movieList);
+
+        return "mypage/mymovie";
     }
 
 }

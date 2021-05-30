@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<th:block th:insert="fragments :: flg_head"/>
+	<style>
+		#wishdel{
+			color: #0b0b0b;
+			cursor: pointer;
+		}
+
+		#wishdel:hover{
+			border: 1px solid #69779b;
+			background: #69779b;
+			color: #fff;
+		}
+	</style>
+</head>
+  <body>
+
+    <div class="page">
+		<th:block th:insert="fragments :: flg_nav"/>
+    
+    <div id="colorlib-page">
+		<th:block th:insert="fragments :: flg_header"/>
+
+		<section class="hero-wrap js-fullheight" style="background-image: url(/images/bg_3.jpg);">
+			<div class="overlay"></div>
+			<div class="container-fluid px-0">
+				<div class="row no-gutters text js-fullheight align-items-end justify-content-center" data-scrollax-parent="true">
+					<div class="col-md-12 ftco-animate text-center">
+						<p class="breadcrumbs">
+							<span class="mr-2"><a th:href="@{/mypage/mycalendar}">My Calendar</a></span><!--영화달력-->
+							<span class="mr-2"><a th:href="@{/mypage/myreview}">My Review</a></span><!--영화후기-->
+							<span class="mr-2"><a th:href="@{/mypage/mymovie(userNo=${#authentication.principal.user.userNo})}">My Movie</a></span><!--찜목록-->
+							<span class="mr-2"><a th:href="@{/mypage/myqna}">My Q&A</a></span><!--나의 문의 및 요청-->
+							<span><a th:href="@{/mypage/myinfomain}">My Info</a></span><!--회원정보변경-->
+						</p>
+						<h1 class="bread">My Movie</h1>
+					</div>
+				</div>
+			</div>
+		</section>
+
+      <section class="ftco-section" th:if="${!movieList.isEmpty()}">
+	      <div class="container">
+			  <h1 class="text-center mb-2">나의 찜목록</h1>
+	        <div class="row" th:each="movie : ${movieList}">
+	          <div class="col-lg-12 ftco-animate">
+	            <div class="about-author d-flex py-5">
+	              <div class="bio align-self-md-center mr-5">
+	                <img th:src="${movie.poster}" alt="Image placeholder" class="img-fluid mb-4" style="border-radius: 0% !important;">
+	              </div>
+	              <div class="desc align-self-md-center">
+	                <h3>[[${movie.mvTitle}]] ([[${movie.mvTitleorg}]])</h3>
+	                <p>[[${movie.plot}]]</p>
+					  <div class="tag-widget post-tag-container mb-5 mt-5">
+						  <div class="tagcloud">
+							  <a th:href="@{/movie/detail(mvNo=${movie.mvNo})}" class="tag-cloud-link">영화 상세보기</a>
+							  <a th:onclick="deleteWish([[${movie.mvNo}]])" class="tag-cloud-link" id="wishdel">찜목록에서 삭제</a>
+						  </div>
+					  </div>
+	              </div>
+	            </div>
+	        </div>
+	      </div>
+	    </section> <!-- .section -->
+		<section class="ftco-section" th:if="${movieList.isEmpty()}">
+			<div class="container">
+				<h1 class="text-center mb-2">나의 찜목록</h1>
+				<div class="row">
+					<div class="col-lg-12 ftco-animate">
+						<div class="about-author py-5">
+							<div class="desc align-self-md-center text-center">
+								<h3 th:text="|${#authentication.name}님의 찜목록이 없습니다.|"></h3>
+								<p>찜목록을 추가해주세요!</p>
+							</div>
+						</div>
+					</div>
+				</div>
+		</section> <!-- .section -->
+
+
+		<th:block th:insert="fragments :: flg_footer"/>
+
+      <!-- loader -->
+      <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+      </div>
+    </div>
+
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="/js/popper.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.easing.1.3.js"></script>
+    <script src="/js/jquery.waypoints.min.js"></script>
+    <script src="/js/jquery.stellar.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/aos.js"></script>
+    <script src="/js/jquery.animateNumber.min.js"></script>
+    <script src="/js/scrollax.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="/js/google-map.js"></script>
+    <script src="/js/main.js"></script>
+
+  <script type="text/javascript" th:inline="javascript">
+	  function deleteWish(mvNum) {
+		  let mvNo = mvNum;
+		  let headerObj = new Headers();
+		  headerObj.append('content-type', "application/x-www-form-urlencoded");
+
+		  if (confirm("찜목록에서 삭제하시겠습니까?")) {
+			  fetch("/wish/del?mvNo=" + mvNo, {
+				  method:"GET",
+				  header : headerObj
+			  })
+					  .then(response => response.text())
+					  .then(text => {
+						  if(text == 'success'){
+							  alert("삭제되었습니다.")
+							  location.href = location.href;
+						  }else{
+							  alert("삭제 도중 에러가 발생했습니다.");
+							  location.href = location.href;
+						  }
+					  })
+		  }else{
+			  alert("취소되었습니다.");
+		  }
+	  }
+  </script>
+    
+  </body>
+</html>
