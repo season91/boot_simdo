@@ -152,12 +152,12 @@
 				header : headerObj
 			}).then(response => {
 				if(response.ok){
-					console.dir(response.text());
-					return response.text();
+					return response.json();
 				}
-			}).then(text => {
-				console.dir(text);
-				return reviewLikeCnt.innerText = text();
+			}).then(data =>{
+				let test = JSON.parse(data);
+				console.dir(test);
+				return reviewLikeCnt.innerText = test;
 			})
 
 		}
