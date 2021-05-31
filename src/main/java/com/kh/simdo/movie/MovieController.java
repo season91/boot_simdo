@@ -138,7 +138,7 @@ public class MovieController {
     }
 
     //영화상세내 댓글 좋아요. 비동기통신
-    @GetMapping("review-Hate")
+    @GetMapping("review-hate")
     @ResponseBody
     public String reviewHate(String reviewNo){
         reviewService.reviewHate(reviewNo);
