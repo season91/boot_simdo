@@ -72,7 +72,7 @@
 											<h3 class="heading mb-3">심도 후기</h3>
 											<a th:if="${reviewList.isEmpty()}" th:href="@{/mypage/writereview(mvNo=${movie.mvNo})}">후기작성하러가기</a>
 											<p th:unless="${reviewList == null}" th:each="review : ${reviewList}" >
-												[(${review.user.userNm})] : [(${review.reviewContent})] <span id="reviewLikeCnt" th:text="${review.reviewLike}"></span><i th:onclick="reviewLike([[${review.reviewNo}]])" class="icon reviewLike icon-favorite"></i> <span id="reviewLikeCnt" th:text="${review.reviewLike}"></span><i th:onclick="reviewHate([[${review.reviewNo}]])" class="icon reviewLike icon-mood_bad"></i>
+												[(${review.user.userNm})] : [(${review.reviewContent})] <span id="reviewLikeCnt" th:text="${review.reviewLike}"></span><i th:onclick="reviewLike([[${review.reviewNo}]])" class="icon reviewLike icon-favorite"></i> <span id="reviewHateCnt" th:text="${review.reviewHate}"></span><i th:onclick="reviewHate([[${review.reviewNo}]])" class="icon reviewLike icon-mood_bad"></i>
 											</p>
 										</div>
 									</div>
@@ -158,6 +158,26 @@
 				let test = JSON.parse(data);
 				console.dir(test);
 				return reviewLikeCnt.innerText = test;
+			})
+
+		}
+
+		let reviewHate = (reviewNo) =>{
+			let reviewLikeCnt = document.querySelector('#reviewHateCnt');
+			let headerObj = new Headers();
+			headerObj.append('content-type', "application/x-www-form-urlencoded");
+
+			fetch("/movie/review-hate?reviewNo="+reviewNo,{
+				method:"get",
+				header : headerObj
+			}).then(response => {
+				if(response.ok){
+					return response.json();
+				}
+			}).then(data =>{
+				let test = JSON.parse(data);
+				console.dir(test);
+				return reviewHateCnt.innerText = test;
 			})
 
 		}
