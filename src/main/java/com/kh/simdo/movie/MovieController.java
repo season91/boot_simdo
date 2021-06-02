@@ -137,7 +137,7 @@ public class MovieController {
         return review.getReviewLike();
     }
 
-    //영화상세내 댓글 좋아요. 비동기통신
+    //영화상세내 댓글 싫어요. 비동기통신
     @GetMapping("review-hate")
     @ResponseBody
     public int reviewHate(String reviewNo){
