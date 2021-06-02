@@ -84,7 +84,7 @@
 											<a th:if="${fmsList.isEmpty()}" th:href="@{/mypage/writefmsline(mvNo=${movie.mvNo})}">명대사작성하러가기</a>
 											<div th:unless="${fmsList == null}" th:each="fmsline : ${fmsList}">
 												<p class="fmsline">
-													[(${review.user.userNm})] : [(${fmsline.fmlContent})] <span id="fmlLikeCnt" th:text="${fmsline.fmlLike}"></span><i th:onclick="fmlLike([[${fmsline.fmslineNo}]])" class="icon reviewLike icon-favorite"></i> <span id="fmlHateCnt" th:text="${fmsline.fmslineNo}"></span><i th:onclick="fmlHate([[${fmsline.fmslineNo}]])" class="icon reviewLike icon-mood_bad"></i>
+													[(${review.user.userNm})] : [(${fmsline.fmlContent})] <span id="fmsLikeCnt" th:text="${fmsline.fmlLike}"></span><i th:onclick="fmsLike([[${fmsline.fmslineNo}]])" class="icon reviewLike icon-favorite"></i> <span id="fmlHateCnt" th:text="${fmsline.fmslineNo}"></span><i th:onclick="fmlHate([[${fmsline.fmslineNo}]])" class="icon reviewLike icon-mood_bad"></i>
 												</p>
 												<select name="lan" size=1 class="choose-lan col-md-3 " id="lang">
 													<option value="en">영어</option>

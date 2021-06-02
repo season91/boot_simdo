@@ -1,6 +1,7 @@
 package com.kh.simdo.movie;
 
 import com.google.gson.Gson;
+import com.kh.simdo.mypage.fmsline.Fmsline;
 import com.kh.simdo.mypage.fmsline.FmslineService;
 import com.kh.simdo.mypage.review.Review;
 import com.kh.simdo.mypage.review.ReviewService;
@@ -143,5 +144,12 @@ public class MovieController {
     public int reviewHate(String reviewNo){
         Review review = reviewService.reviewHate(reviewNo);
         return review.getReviewHate();
+    }
+
+    @GetMapping("fmsline-like")
+    @ResponseBody
+    public int fmslineLike(String fmslineNo){
+        Fmsline fmsline = fmslineService.fmslineLike(fmslineNo);
+        return fmsline.getFmlLike();
     }
 }

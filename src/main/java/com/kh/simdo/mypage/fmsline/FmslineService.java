@@ -46,4 +46,9 @@ public class FmslineService {
         return fmslineRepository.findByMovieAndIsFmlDel(movie, isFmlDel);
     }
 
+    public Fmsline fmslineLike(String fmslineNo){
+        Fmsline fmsline = fmslineRepository.findByFmslineNo(fmslineNo);
+        fmsline.setFmlLike(fmsline.getFmlLike()+1);
+        return fmslineRepository.save(fmsline);
+    }
 }
