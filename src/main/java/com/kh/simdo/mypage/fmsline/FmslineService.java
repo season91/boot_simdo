@@ -51,4 +51,10 @@ public class FmslineService {
         fmsline.setFmlLike(fmsline.getFmlLike()+1);
         return fmslineRepository.save(fmsline);
     }
+
+    public Fmsline fmslineHate(String fmslineNo) {
+        Fmsline fmsline = fmslineRepository.findByFmslineNo(fmslineNo);
+        fmsline.setFmlHate(fmsline.getFmlHate()+1);
+        return fmslineRepository.save(fmsline);
+    }
 }

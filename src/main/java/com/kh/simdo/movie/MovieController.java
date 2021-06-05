@@ -152,4 +152,11 @@ public class MovieController {
         Fmsline fmsline = fmslineService.fmslineLike(fmslineNo);
         return fmsline.getFmlLike();
     }
+
+    @GetMapping("fmsline-hate")
+    @ResponseBody
+    public int fmslineHate(String fmslineNo){
+        Fmsline fmsline = fmslineService.fmslineHate(fmslineNo);
+        return fmsline.getFmlHate();
+    }
 }

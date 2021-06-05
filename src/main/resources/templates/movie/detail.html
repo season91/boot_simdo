@@ -185,11 +185,41 @@
 		}
 
 		let fmlLike = (fmslineNo) =>{
-			let reviewLikeCnt = document.querySelector('#fmlLikeCnt');
+			let fmlLikeCnt = document.querySelector('#fmlLikeCnt');
+			let headerObj = new Headers();
+			headerObj.append('content-type', "application/x-www-form-urlencoded");
+
+			fetch("/movie/fmsline-like?fmslineNo="+fmslineNo,{
+				method:"get",
+				header : headerObj
+			}).then(response => {
+				if(response.ok){
+					return response.json();
+				}
+			}).then(data =>{
+				let test = JSON.parse(data);
+				console.dir(test);
+				return fmlLikeCnt.innerText = test;
+			})
 		}
 
 		let fmlHate = (fmslineNo) =>{
-			let reviewLikeCnt = document.querySelector('#fmlHateCnt');
+			let fmlHateCnt = document.querySelector('#fmlHateCnt');
+			let headerObj = new Headers();
+			headerObj.append('content-type', "application/x-www-form-urlencoded");
+
+			fetch("/movie/fmsline-hate?fmslineNo="+fmslineNo,{
+				method:"get",
+				header : headerObj
+			}).then(response => {
+				if(response.ok){
+					return response.json();
+				}
+			}).then(data =>{
+				let test = JSON.parse(data);
+				console.dir(test);
+				return fmlHateCnt.innerText = test;
+			})
 		}
 	</script>
 
