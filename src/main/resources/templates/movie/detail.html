@@ -72,7 +72,7 @@
 											<h3 class="heading mb-3">심도 후기</h3>
 											<a th:if="${reviewList.isEmpty()}" th:href="@{/mypage/writereview(mvNo=${movie.mvNo})}">후기작성하러가기</a>
 											<p th:unless="${reviewList == null}" th:each="review : ${reviewList}" >
-												[(${review.user.userNm})] : [(${review.reviewContent})] <span id="reviewLikeCnt" th:text="${review.reviewLike}"></span><i th:onclick="reviewLike([[${review.reviewNo}]])" class="icon reviewLike icon-favorite"></i> <span id="reviewHateCnt" th:text="${review.reviewHate}"></span><i th:onclick="reviewHate([[${review.reviewNo}]])" class="icon reviewLike icon-mood_bad"></i>
+												[(${review.user.userNm})] : [(${review.reviewContent})] <span id="reviewLikeCnt" th:text="${review.reviewLike}"></span><i th:onclick="reviewLike([[${review.reviewNo}]])" class="icon reviewLike icon-favorite"></i> <span id="reviewHateCnt" th:text="${review.reviewHate}"></span><i th:onclick="reviewHate([[${review.reviewNo}]])" class="icon reviewHate icon-mood_bad"></i>
 											</p>
 										</div>
 									</div>
@@ -84,7 +84,7 @@
 											<a th:if="${fmsList.isEmpty()}" th:href="@{/mypage/writefmsline(mvNo=${movie.mvNo})}">명대사작성하러가기</a>
 											<div th:unless="${fmsList == null}" th:each="fmsline : ${fmsList}">
 												<p class="fmsline">
-													[(${review.user.userNm})] : [(${fmsline.fmlContent})] <span id="fmlLikeCnt" th:text="${fmsline.fmlLike}"></span><i th:onclick="fmlLike([[${fmsline.fmslineNo}]])" class="icon reviewLike icon-favorite"></i> <span id="fmlHateCnt" th:text="${fmsline.fmslineNo}"></span><i th:onclick="fmlHate([[${fmsline.fmslineNo}]])" class="icon reviewLike icon-mood_bad"></i>
+													[(${fmsline.user.userNm})] : [(${fmsline.fmlContent})] <span id="fmlLikeCnt" th:text="${fmsline.fmlLike}"></span><i th:onclick="fmlLike([[${fmsline.fmslineNo}]])" class="icon fmlLike icon-favorite"></i> <span id="fmlHateCnt" th:text="${fmsline.fmlHate}"></span><i th:onclick="fmlHate([[${fmsline.fmslineNo}]])" class="icon fmlHate icon-mood_bad"></i>
 												</p>
 												<select name="lan" size=1 class="choose-lan col-md-3 " id="lang">
 													<option value="en">영어</option>
