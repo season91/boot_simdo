@@ -17,5 +17,5 @@ public interface ReviewRepository extends JpaRepository<Review, String> {
     Review findByUserAndMovieAndIsReviewDel(User user, Movie movie, boolean isReviewDel);
 
     //아영: 영화상세에 후기내역 표시를 위한.
-    List<Review> findByMovieAndIsReviewDelOrderByReviewRegDateDesc(Movie movie, boolean isReviewDel);
+    List<Review> findByMovieAndIsReviewDelOrderByReviewLikeDesc(Movie movie, boolean isReviewDel);
 }

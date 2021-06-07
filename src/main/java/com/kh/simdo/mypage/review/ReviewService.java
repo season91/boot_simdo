@@ -44,7 +44,7 @@ public class ReviewService {
 
     //아영: 영화상세에 후기내역 표시를 위한
     public List<Review> findReviewList(Movie movie, boolean isReviewDel){
-        return reviewRepository.findByMovieAndIsReviewDelOrderByReviewRegDateDesc(movie, isReviewDel);
+        return reviewRepository.findByMovieAndIsReviewDelOrderByReviewLikeDesc(movie, isReviewDel);
     }
 
     //아영: 리뷰 좋아요 +1 업데이트

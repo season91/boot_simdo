@@ -18,5 +18,5 @@ public interface FmslineRepository extends JpaRepository<Fmsline, String> {
     List<Fmsline> findByMovieAndIsFmlDel(Movie movie, boolean isFmlDel);
 
     //아영: 영화상세에 명대사내역 표시를 위한.
-    List<Fmsline> findByMovieAndIsFmlDelOrderByFmlRegDateDesc(Movie movie, boolean isFmlDel);
+    List<Fmsline> findByMovieAndIsFmlDelOrderByFmlLikeDesc(Movie movie, boolean isFmlDel);
 }
