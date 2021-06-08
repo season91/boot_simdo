@@ -71,8 +71,8 @@
 										<div class="media-body">
 											<h3 class="heading mb-3">심도 후기</h3>
 											<a th:if="${reviewList.isEmpty()}" th:href="@{/mypage/writereview(mvNo=${movie.mvNo})}">후기작성하러가기</a>
-											<p th:unless="${reviewList == null}" th:each="review : ${reviewList}" >
-												[(${review.user.userNm})] : [(${review.reviewContent})] <span id="reviewLikeCnt" th:text="${review.reviewLike}"></span><i th:onclick="reviewLike([[${review.reviewNo}]])" class="icon reviewLike icon-favorite"></i> <span id="reviewHateCnt" th:text="${review.reviewHate}"></span><i th:onclick="reviewHate([[${review.reviewNo}]])" class="icon reviewHate icon-mood_bad"></i>
+											<p th:unless="${reviewList == null}" th:each="review,status : ${reviewList}" >
+												[(${review.user.userNm})] : [(${review.reviewContent})] <span th:id="|reviewLikeCnt ${status.count}|" th:text="${review.reviewLike}"></span><i th:onclick="reviewLike([[${review.reviewNo}]],[[${status.count}]])" class="icon reviewLike icon-favorite"></i> <span th:id="|reviewHateCnt ${status.count}|" th:text="${review.reviewHate}"></span><i th:onclick="reviewHate([[${review.reviewNo}]],[[${status.count}]])" class="icon reviewHate icon-mood_bad"></i>
 											</p>
 										</div>
 									</div>
@@ -83,7 +83,7 @@
 											<h3 class="heading mb-3" >심도 명대사</h3>
 											<a th:if="${fmsList.isEmpty()}" th:href="@{/mypage/writefmsline(mvNo=${movie.mvNo})}">명대사작성하러가기</a>
 											<div th:unless="${fmsList == null}" th:each="fmsline,status : ${fmsList}">
-												<p th:id="|fms ${status.count}|" th:text="${fmsline.fmlContent}"></p><span id="fmlLikeCnt" th:text="${fmsline.fmlLike}"></span><i th:onclick="fmlLike([[${fmsline.fmslineNo}]])" class="icon fmlLike icon-favorite"></i> <span id="fmlHateCnt" th:text="${fmsline.fmlHate}"></span><i th:onclick="fmlHate([[${fmsline.fmslineNo}]])" class="icon fmlHate icon-mood_bad"></i>
+												<p th:id="|fms ${status.count}|" th:text="${fmsline.fmlContent}"></p><span th:id="|fmlLikeCnt ${status.count}|" th:text="${fmsline.fmlLike}"></span><i th:onclick="fmlupdate('like',[[${fmsline.fmslineNo}]],[[${status.count}]])" class="icon fmlLike icon-favorite"></i> <span th:id="|fmlHateCnt ${status.count}|" th:text="${fmsline.fmlHate}"></span><i th:onclick="fmlupdate('hate',[[${fmsline.fmslineNo}]],[[${status.count}]])" class="icon fmlHate icon-mood_bad"></i>
 												<select name="lan" size=1 class="choose-lan col-md-3" th:id="${status.count}">
 													<option value="en">영어</option>
 													<option value="ja">일본어</option>
@@ -140,9 +140,10 @@
     <script src="/js/main.js"></script>
     <script src="/js/movie.js"></script>
 	<script type="text/javascript" th:inline="javascript">
-		let reviewLike = (reviewNo) =>{
-			let reviewLikeCnt = document.querySelector('#reviewLikeCnt');
+		let reviewLike = (reviewNo, status) =>{
+			let id = 'reviewLikeCnt '+status;
 			let headerObj = new Headers();
+
 			headerObj.append('content-type', "application/x-www-form-urlencoded");
 
 			fetch("/movie/review-like?reviewNo="+reviewNo,{
@@ -155,7 +156,7 @@
 			}).then(data =>{
 				let test = JSON.parse(data);
 				console.dir(test);
-				return reviewLikeCnt.innerText = test;
+				return document.getElementById(id).innerText = test;
 			})
 
 		}
@@ -180,12 +181,22 @@
 
 		}
 
-		let fmlLike = (fmslineNo) =>{
-			let fmlLikeCnt = document.querySelector('#fmlLikeCnt');
+		let fmlupdate = (update, fmslineNo, status) =>{
+			let url = "/movie/fmsline-";
+			let id = "fml";
 			let headerObj = new Headers();
 			headerObj.append('content-type', "application/x-www-form-urlencoded");
 
-			fetch("/movie/fmsline-like?fmslineNo="+fmslineNo,{
+			if(update == 'like'){
+				id += "LikeCnt " + status;
+				url += "like?fmslineNo=";
+
+			} else {
+				id += "HateCnt " + status;
+				url += "hate?fmslineNo=";
+			}
+
+			fetch(url+fmslineNo,{
 				method:"get",
 				header : headerObj
 			}).then(response => {
@@ -194,28 +205,9 @@
 				}
 			}).then(data =>{
 				let test = JSON.parse(data);
-				console.dir(test);
-				return fmlLikeCnt.innerText = test;
+				return document.getElementById(id).innerText = test;
 			})
-		}
 
-		let fmlHate = (fmslineNo) =>{
-			let fmlHateCnt = document.querySelector('#fmlHateCnt');
-			let headerObj = new Headers();
-			headerObj.append('content-type', "application/x-www-form-urlencoded");
-
-			fetch("/movie/fmsline-hate?fmslineNo="+fmslineNo,{
-				method:"get",
-				header : headerObj
-			}).then(response => {
-				if(response.ok){
-					return response.json();
-				}
-			}).then(data =>{
-				let test = JSON.parse(data);
-				console.dir(test);
-				return fmlHateCnt.innerText = test;
-			})
 		}
 
 		let translation = (fmsline, lang) => {
