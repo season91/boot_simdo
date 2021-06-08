@@ -5,7 +5,6 @@
     let wishAdd = ()=>{
         let headerObj = new Headers();
         headerObj.append('content-type', "application/x-www-form-urlencoded");
-
         fetch("/wish/add"+mvno,{
             method:"get",
             header : headerObj

@@ -84,17 +84,17 @@ public class MovieController {
     @PostMapping("translation")
     @ResponseBody
     public String fmsTranslation(@RequestParam String data){
-
         Gson gson = new Gson();
         Map<String, String> parsedData = gson.fromJson(data, Map.class);
 
-        String text = (String) parsedData.get("text");
+        String fmsline = (String) parsedData.get("fmsline");
         String lan = (String) parsedData.get("lan");
 
-        String res = movieService.papagoAPI(text, lan);
+        String res = movieService.papagoAPI(fmsline, lan);
         if(res == null){
             return "fail";
         }
+        System.out.println(res);
         return res;
     }
 
