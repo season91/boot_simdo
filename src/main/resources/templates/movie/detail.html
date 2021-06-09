@@ -72,7 +72,7 @@
 											<h3 class="heading mb-3">심도 후기</h3>
 											<a th:if="${reviewList.isEmpty()}" th:href="@{/mypage/writereview(mvNo=${movie.mvNo})}">후기작성하러가기</a>
 											<p th:unless="${reviewList == null}" th:each="review,status : ${reviewList}" >
-												[(${review.user.userNm})] : [(${review.reviewContent})] <span th:id="|reviewLikeCnt ${status.count}|" th:text="${review.reviewLike}"></span><i th:onclick="reviewLike([[${review.reviewNo}]],[[${status.count}]])" class="icon reviewLike icon-favorite"></i> <span th:id="|reviewHateCnt ${status.count}|" th:text="${review.reviewHate}"></span><i th:onclick="reviewHate([[${review.reviewNo}]],[[${status.count}]])" class="icon reviewHate icon-mood_bad"></i>
+												[(${review.user.userNm})] : [(${review.reviewContent})] <span th:id="|reviewLikeCnt ${status.count}|" th:text="${review.reviewLike}"></span><i th:onclick="reviewupdate('like',[[${review.reviewNo}]],[[${status.count}]])" class="icon reviewLike icon-favorite"></i> <span th:id="|reviewHateCnt ${status.count}|" th:text="${review.reviewHate}"></span><i th:onclick="reviewupdate('hate',[[${review.reviewNo}]],[[${status.count}]])" class="icon reviewHate icon-mood_bad"></i>
 											</p>
 										</div>
 									</div>
@@ -140,13 +140,22 @@
     <script src="/js/main.js"></script>
     <script src="/js/movie.js"></script>
 	<script type="text/javascript" th:inline="javascript">
-		let reviewLike = (reviewNo, status) =>{
-			let id = 'reviewLikeCnt '+status;
+		let reviewupdate = (update, reviewNo, status) => {
+			let url = "/movie/review-";
+			let id = "review";
 			let headerObj = new Headers();
-
 			headerObj.append('content-type', "application/x-www-form-urlencoded");
 
-			fetch("/movie/review-like?reviewNo="+reviewNo,{
+			if(update == 'like'){
+				id += "LikeCnt " + status;
+				url += "like?reviewNo=";
+
+			} else {
+				id += "HateCnt " + status;
+				url += "hate?reviewNo=";
+			}
+
+			fetch(url+reviewNo,{
 				method:"get",
 				header : headerObj
 			}).then(response => {
@@ -155,30 +164,8 @@
 				}
 			}).then(data =>{
 				let test = JSON.parse(data);
-				console.dir(test);
 				return document.getElementById(id).innerText = test;
 			})
-
-		}
-
-		let reviewHate = (reviewNo) =>{
-			let reviewLikeCnt = document.querySelector('#reviewHateCnt');
-			let headerObj = new Headers();
-			headerObj.append('content-type', "application/x-www-form-urlencoded");
-
-			fetch("/movie/review-hate?reviewNo="+reviewNo,{
-				method:"get",
-				header : headerObj
-			}).then(response => {
-				if(response.ok){
-					return response.json();
-				}
-			}).then(data =>{
-				let test = JSON.parse(data);
-				console.dir(test);
-				return reviewHateCnt.innerText = test;
-			})
-
 		}
 
 		let fmlupdate = (update, fmslineNo, status) =>{
