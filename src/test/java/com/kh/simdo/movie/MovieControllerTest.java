@@ -4,6 +4,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,6 +23,7 @@ public class MovieControllerTest {
     MockMvc mockMvc;
 
     @Test
+    @DisplayName("db insert 확인")
     public void movieAPITest() throws Exception {
         mockMvc.perform(get("/movie/db")
             .param("title","라라랜드")
@@ -29,6 +31,7 @@ public class MovieControllerTest {
     }
 
     @Test
+    @DisplayName("번역 확인")
     public void papagoAPITest() throws Exception{
         Map<String, String> data = new HashMap<>();
         data.put("text","조커");
@@ -38,4 +41,11 @@ public class MovieControllerTest {
                 .param("lan","en")
         ).andDo(print());
     }
+
+    @Test
+    @DisplayName("영화목록 확인")
+    public void movieList() throws Exception {
+        mockMvc.perform(get("/movie/movielist")).andDo(print());
+    }
+
 }

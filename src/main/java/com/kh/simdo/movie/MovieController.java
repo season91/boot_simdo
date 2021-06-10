@@ -94,7 +94,7 @@ public class MovieController {
         if(res == null){
             return "fail";
         }
-        System.out.println(res);
+
         return res;
     }
 
@@ -125,7 +125,6 @@ public class MovieController {
     //영화 검색
     @GetMapping("search")
     public String movieSearch(String keyword, Model model){
-        System.out.println(keyword);
         model.addAttribute("movieList", movieService.searchMovie(keyword));
         return "movie/movielist";
     }
