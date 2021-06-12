@@ -48,4 +48,12 @@ public class MovieControllerTest {
         mockMvc.perform(get("/movie/movielist")).andDo(print());
     }
 
+    @Test
+    @DisplayName("영화 대본 확인")
+    public void movieScript() throws Exception {
+        mockMvc.perform(
+                get("/movie/script")
+                .param("mvNo","F48336")
+        ).andDo(print());
+    }
 }
