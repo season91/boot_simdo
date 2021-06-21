@@ -56,4 +56,12 @@ public class MovieControllerTest {
                 .param("mvNo","F48336")
         ).andDo(print());
     }
+
+
+    @Test
+    @DisplayName("영화 검색 ")
+    public void movieSearch() throws Exception {
+        mockMvc.perform(get("/movie/search")
+        .param("keyword","조커")).andDo(print());
+    }
 }
