@@ -80,13 +80,13 @@ public class MovieService {
 
         Map resultMap = null;
         try {
-            // Data 값 가져오기.
+            // 원본그대로 뿌려주지않고 가공해본다. Data 값 가져오기.
             Map resMap = om.readValue(json, Map.class);
             List<String> dataList = (List<String>) resMap.get("Data");
             String dataStr = om.writeValueAsString(dataList.get(0));
             Map dataMap = om.readValue(dataStr, Map.class);
 
-            // Result값 가져오기.
+            // Result값 가져온걸 다시 뿌려준다.
             List<String> resultList = (List<String>) dataMap.get("Result");
             String resultStr = om.writeValueAsString(resultList.get(0));
             resultMap = om.readValue(resultStr, Map.class);
