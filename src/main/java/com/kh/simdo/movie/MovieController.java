@@ -50,6 +50,14 @@ public class MovieController {
         return "index";
     }
 
+
+    //api 파싱 연습
+    @GetMapping(value = "/movie-api")
+    public String getMovieAPI(Model model){
+        model.addAttribute("movie",movieService.kmdbAPItest());
+        return "movie/api";
+    }
+
     // 영화 목록
     @GetMapping(value = "/movielist")
     public String movieList(Model model){

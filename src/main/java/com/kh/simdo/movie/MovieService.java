@@ -69,6 +69,36 @@ public class MovieService {
     }
 
 
+    public Map<String, Object> kmdbAPItest() {
+        HttpUtils util = new HttpUtils();
+        ObjectMapper om = new ObjectMapper();
+        String SERVICE_KEY = "http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_json2.jsp?ServiceKey=GE40RB7377JK9WJ72713&query=";
+
+        // json 형태로 받는다.
+        String url = SERVICE_KEY + "ToddPhillips&actor=호아킨피닉스&detail=Y&collection=kmdb_new2&listCount=1";
+        String json = util.get(url);
+
+        Map resultMap = null;
+        try {
+            // Data 값 가져오기.
+            Map resMap = om.readValue(json, Map.class);
+            List<String> dataList = (List<String>) resMap.get("Data");
+            String dataStr = om.writeValueAsString(dataList.get(0));
+            Map dataMap = om.readValue(dataStr, Map.class);
+
+            // Result값 가져오기.
+            List<String> resultList = (List<String>) dataMap.get("Result");
+            String resultStr = om.writeValueAsString(resultList.get(0));
+            resultMap = om.readValue(resultStr, Map.class);
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        return resultMap;
+    }
+
+
     // json 한번더 파싱해야 하는 경우 사용할 메서드
     public Map<String, Object> listSeparation(Map<String, Object> map, String beforecategory, String aftercategory) {
         ObjectMapper om = new ObjectMapper();
