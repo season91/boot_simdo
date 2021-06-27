@@ -78,7 +78,8 @@ public class MovieService {
         String url = SERVICE_KEY + "ToddPhillips&actor=호아킨피닉스&detail=Y&collection=kmdb_new2&listCount=1";
         String json = util.get(url);
 
-        Map resultMap = null;
+        // DOCID, title만 담아본다.
+        Map<String, Object> resultMap = new HashMap();
         try {
             // 원본그대로 뿌려주지않고 가공해본다. Data 값 가져오기.
             Map resMap = om.readValue(json, Map.class);
@@ -89,7 +90,11 @@ public class MovieService {
             // Result값 가져온걸 다시 뿌려준다.
             List<String> resultList = (List<String>) dataMap.get("Result");
             String resultStr = om.writeValueAsString(resultList.get(0));
-            resultMap = om.readValue(resultStr, Map.class);
+            System.out.println("resultStr : " + resultStr);
+            Map content = om.readValue(resultStr, Map.class);
+
+            resultMap.put("content",content);
+            System.out.println(resultMap);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();

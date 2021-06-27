@@ -50,7 +50,6 @@ public class MovieController {
         return "index";
     }
 
-
     //api 파싱 연습
     @GetMapping(value = "/movie-api")
     public String getMovieAPI(Model model){
