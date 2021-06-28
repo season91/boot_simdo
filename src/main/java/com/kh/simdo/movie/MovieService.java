@@ -90,11 +90,17 @@ public class MovieService {
             // Result값 가져온걸 다시 뿌려준다.
             List<String> resultList = (List<String>) dataMap.get("Result");
             String resultStr = om.writeValueAsString(resultList.get(0));
-            System.out.println("resultStr : " + resultStr);
             Map content = om.readValue(resultStr, Map.class);
 
-            resultMap.put("content",content);
-            System.out.println(resultMap);
+//            for(Object key : content.keySet()){
+//                System.out.println("##key " + key);
+//                System.out.println("##val " + content.get(key));
+//            }
+
+            resultMap.put("DOCID",content.get("DOCID"));
+            resultMap.put("title",content.get("title"));
+            resultMap.put("genre",content.get("genre"));
+
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
