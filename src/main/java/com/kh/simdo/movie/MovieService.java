@@ -94,13 +94,21 @@ public class MovieService {
 
 //            for(Object key : content.keySet()){
 //                System.out.println("##key " + key);
-//                System.out.println("##val " + content.get(key));
+//                System.out.println("##val " + content.get(key) + " class " + content.get(key).getClass());
 //            }
 
             resultMap.put("DOCID",content.get("DOCID"));
             resultMap.put("title",content.get("title"));
             resultMap.put("genre",content.get("genre"));
 
+            String[] infoList = new String[] {"nation", "company","rating","keyword","use"};
+
+            List<Object> ratingList = new ArrayList<>();
+            for (int i = 0; i < 5; i++){
+                ratingList.add(content.get(infoList[i]));
+            }
+
+            resultMap.put("info", ratingList);
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
