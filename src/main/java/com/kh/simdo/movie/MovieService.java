@@ -68,7 +68,7 @@ public class MovieService {
         return resultMap;
     }
 
-
+    // api parse 연습
     public Map<String, Object> kmdbAPItest() {
         HttpUtils util = new HttpUtils();
         ObjectMapper om = new ObjectMapper();
@@ -97,10 +97,7 @@ public class MovieService {
 //                System.out.println("##val " + content.get(key) + " class " + content.get(key).getClass());
 //            }
 
-            resultMap.put("DOCID",content.get("DOCID"));
-            resultMap.put("title",content.get("title"));
-            resultMap.put("genre",content.get("genre"));
-
+            String[] titleList = new String[] {"DOCID", "title", "genre", "info","nation"};
             String[] infoList = new String[] {"nation", "company","rating","keyword","use"};
 
             List<Object> ratingList = new ArrayList<>();
@@ -108,7 +105,25 @@ public class MovieService {
                 ratingList.add(content.get(infoList[i]));
             }
 
+            for (int i = 0; i < titleList.length; i++){
+                if(titleList[i].equals("info")){
+                    for (int j = 0; j < 5; j++){
+                        ratingList.add(content.get(infoList[j]));
+                    }
+                    resultMap.put(titleList[i], ratingList);
+                } else {
+                    resultMap.put(titleList[i], content.get(titleList[i]));
+                }
+            }
+            resultMap.put("DOCID",content.get("DOCID"));
+            resultMap.put("title",content.get("title"));
+            resultMap.put("genre",content.get("genre"));
+
+
+
+
             resultMap.put("info", ratingList);
+            resultMap.put("nation",content.get("nation"));
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
