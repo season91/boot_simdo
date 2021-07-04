@@ -97,16 +97,21 @@ public class MovieService {
 //                System.out.println("##val " + content.get(key) + " class " + content.get(key).getClass());
 //            }
 
+            // 새로운 json 양식으로 가공해본다.
+            // titleList는 넣을 항목이고, 그중 info는 배열 형태로 넣어준다. 그 중 rating도 List 형태이다.
             String[] titleList = new String[] {"DOCID", "title", "genre", "info","nation"};
             String[] infoList = new String[] {"nation", "company","rating","keyword","use"};
 
+            // ratingList 먼저 구현.
             List<Object> ratingList = new ArrayList<>();
-            for (int i = 0; i < 5; i++){
+            for (int i = 0; i < infoList.length; i++){
                 ratingList.add(content.get(infoList[i]));
             }
 
+            // titleList 구현.
             for (int i = 0; i < titleList.length; i++){
                 if(titleList[i].equals("info")){
+                    // infoList 구현
                     for (int j = 0; j < 5; j++){
                         ratingList.add(content.get(infoList[j]));
                     }
@@ -115,15 +120,6 @@ public class MovieService {
                     resultMap.put(titleList[i], content.get(titleList[i]));
                 }
             }
-            resultMap.put("DOCID",content.get("DOCID"));
-            resultMap.put("title",content.get("title"));
-            resultMap.put("genre",content.get("genre"));
-
-
-
-
-            resultMap.put("info", ratingList);
-            resultMap.put("nation",content.get("nation"));
 
         } catch (JsonProcessingException e) {
             e.printStackTrace();
